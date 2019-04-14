@@ -1,0 +1,57 @@
+AWSTemplateFormatVersion: 2010-09-09
+Metadata:
+  'AWS::CloudFormation::Designer':
+    e0f86cd1-5131-494d-98ee-323aaaac8474:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: -235.5
+        'y': 19.600006103515625
+      z: 0
+      embeds: []
+    34f47d58-f052-42eb-a488-9ea1bb328a21:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: -400
+        'y': 20
+      z: 0
+Resources:
+  GrafanaRoute53Redirect:
+    Type: 'AWS::Route53::RecordSet'
+    Properties:
+      ResourceRecords:
+        - Value: GrafanaLB-370208854.ap-southeast-2.elb.amazonaws.com
+      Type: CNAME
+      Name: grafana.mrsandbox.rocks.
+      TTL: 60
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: e0f86cd1-5131-494d-98ee-323aaaac8474
+  GrafanaALB:
+    Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
+    Properties:
+      IpAddressType: ipv4
+      VpcId: vpc-a2418bc5
+      LoadBalancerArn: >-
+        arn:aws:elasticloadbalancing:ap-southeast-2:598112752826:loadbalancer/app/GrafanaLB/a2c9c5c984454a1f
+      State:
+        Code: active
+      DNSName: GrafanaLB-370208854.ap-southeast-2.elb.amazonaws.com
+      SecurityGroups:
+        - sg-0bef498df29f9eb6a
+      LoadBalancerName: GrafanaLB
+      CreatedTime: '2019-03-22T05:00:55.770Z'
+      Scheme: internet-facing
+      Type: application
+      CanonicalHostedZoneId: Z1GM3OXH4ZPM65
+      AvailabilityZones:
+        - SubnetId: subnet-f2af3295
+          ZoneName: ap-southeast-2b
+        - SubnetId: subnet-f451b6ac
+          ZoneName: ap-southeast-2c
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 34f47d58-f052-42eb-a488-9ea1bb328a21
