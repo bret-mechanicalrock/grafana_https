@@ -6,8 +6,8 @@ Metadata:
         width: 60
         height: 60
       position:
-        x: -235.5
-        'y': 19.600006103515625
+        x: -510
+        'y': 30
       z: 0
       embeds: []
     34f47d58-f052-42eb-a488-9ea1bb328a21:
@@ -15,9 +15,33 @@ Metadata:
         width: 60
         height: 60
       position:
-        x: -400
-        'y': 20
+        x: -250
+        'y': 180
+      z: 1
+      parent: 39192d32-7dce-403d-9bea-638c828ba8b2
+      embeds: []
+    39192d32-7dce-403d-9bea-638c828ba8b2:
+      size:
+        width: 350
+        height: 290
+      position:
+        x: -300
+        'y': 40
       z: 0
+      embeds:
+        - 34f47d58-f052-42eb-a488-9ea1bb328a21
+        - ca7cd2af-98eb-431a-a923-ee21d2809bbd
+    ca7cd2af-98eb-431a-a923-ee21d2809bbd:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: -92.70474991989896
+        'y': 177.4307694375557
+      z: 1
+      parent: 39192d32-7dce-403d-9bea-638c828ba8b2
+      iscontainedinside:
+        - 39192d32-7dce-403d-9bea-638c828ba8b2
 Resources:
   GrafanaRoute53Redirect:
     Type: 'AWS::Route53::RecordSet'
@@ -55,3 +79,58 @@ Resources:
     Metadata:
       'AWS::CloudFormation::Designer':
         id: 34f47d58-f052-42eb-a488-9ea1bb328a21
+  GrafanaLoadBalancerVPC:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      VpcId: vpc-a2418bc5
+      InstanceTenancy: default
+      CidrBlockAssociationSet:
+        - AssociationId: vpc-cidr-assoc-b9a107d1
+          CidrBlock: 172.31.0.0/16
+          CidrBlockState:
+            State: associated
+      State: available
+      DhcpOptionsId: dopt-0a4ea26d
+      OwnerId: '598112752826'
+      CidrBlock: 172.31.0.0/16
+      IsDefault: true
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 39192d32-7dce-403d-9bea-638c828ba8b2
+  GrafanaLoadBalancerSG:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      VpcId: !Ref GrafanaLoadBalancerVPC
+      IpPermissionsEgress:
+        - IpProtocol: '-1'
+          PrefixListIds: []
+          IpRanges:
+            - CidrIp: 0.0.0.0/0
+          UserIdGroupPairs: []
+          Ipv6Ranges: []
+      Description: Allow traffic in from ports 80 & 443
+      IpPermissions:
+        - PrefixListIds: []
+          FromPort: 80
+          IpRanges:
+            - CidrIp: 0.0.0.0/0
+          ToPort: 80
+          IpProtocol: tcp
+          UserIdGroupPairs: []
+          Ipv6Ranges:
+            - CidrIpv6: '::/0'
+        - PrefixListIds: []
+          FromPort: 443
+          IpRanges:
+            - CidrIp: 0.0.0.0/0
+          ToPort: 443
+          IpProtocol: tcp
+          UserIdGroupPairs: []
+          Ipv6Ranges:
+            - CidrIpv6: '::/0'
+      GroupName: GrafanaPOC-ELB
+      OwnerId: '598112752826'
+      GroupId: sg-0bef498df29f9eb6a
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: ca7cd2af-98eb-431a-a923-ee21d2809bbd
