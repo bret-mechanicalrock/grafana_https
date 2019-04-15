@@ -29,8 +29,9 @@ Metadata:
         'y': 40
       z: 0
       embeds:
-        - 34f47d58-f052-42eb-a488-9ea1bb328a21
         - ca7cd2af-98eb-431a-a923-ee21d2809bbd
+        - 34f47d58-f052-42eb-a488-9ea1bb328a21
+        - 7488bb2b-70b2-44a6-89c3-04d028982352
     ca7cd2af-98eb-431a-a923-ee21d2809bbd:
       size:
         width: 60
@@ -42,6 +43,15 @@ Metadata:
       parent: 39192d32-7dce-403d-9bea-638c828ba8b2
       iscontainedinside:
         - 39192d32-7dce-403d-9bea-638c828ba8b2
+    7488bb2b-70b2-44a6-89c3-04d028982352:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: -110
+        'y': 70
+      z: 1
+      parent: 39192d32-7dce-403d-9bea-638c828ba8b2
 Resources:
   GrafanaRoute53Redirect:
     Type: 'AWS::Route53::RecordSet'
@@ -134,3 +144,9 @@ Resources:
     Metadata:
       'AWS::CloudFormation::Designer':
         id: ca7cd2af-98eb-431a-a923-ee21d2809bbd
+  EC2EIPIM81:
+    Type: 'AWS::EC2::EIP'
+    Properties: {}
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 7488bb2b-70b2-44a6-89c3-04d028982352
