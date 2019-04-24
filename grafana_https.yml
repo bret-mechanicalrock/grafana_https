@@ -1,0 +1,164 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Template to create an Application LoadBalancer to terminate an HTTPS connection
+
+Parameters:
+
+  StackOwner:
+    Description: Responsible for this stack
+    Type: String
+    Default: 'bret.waldow@mechanicalrock.io'
+
+  HostedzoneNameParameter:
+    Description: This must be the Hosted Zone used for the Recordset. It MUST end with the '.' character!
+    Type: String
+    Default: 'mrsandbox.rocks.'
+
+  RecordsetNameParameter:
+    Description: This will be the public name of the URI to reach Grafana. It MUST end with the '.' character!
+    Type: String
+    Default: 'grafana.mrsandbox.rocks.'
+
+  AWSCert:
+    Description: The SSL certificate registered with AWS for the URI
+    Type: String
+    Default: 'arn:aws:acm:ap-southeast-2:598112752826:certificate/b88e9fef-eb9d-4ce3-b9cd-4670e2b671ae' 
+
+  GrafanaVPC:
+    Description: VPC Grafana and subnets are in
+    Type: AWS::EC2::VPC::Id
+    Default: 'vpc-a2418bc5'
+
+  GrafanaSubnets:
+    Description: Subnets in the VPC
+    Type: CommaDelimitedList
+    Default: 'subnet-5ee86617, subnet-f2af3295'
+  
+
+Resources:  
+
+  GrafanaALBSG:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: "Security for the Application Load Balancer which terminates HTTPS"
+      GroupName: 'GrafanaSG'
+      Tags:
+        - Key: Owner
+          Value: !Ref StackOwner
+      VpcId: !Ref GrafanaVPC
+
+  ALBHTTPIngress:
+    Type: "AWS::EC2::SecurityGroupIngress"
+    Properties:
+      CidrIp: '0.0.0.0/0'
+      Description: 'HTTP port ingress rule for Grafana Aplication Load Balancer'
+      FromPort: 80
+      GroupId: !Ref GrafanaALBSG
+      IpProtocol: 'tcp'
+      ToPort: 80
+
+  ALBHTTPSIngress:
+    Type: "AWS::EC2::SecurityGroupIngress"
+    Properties:
+      CidrIp: '0.0.0.0/0'
+      Description: 'HTTPS port ingress rule for Grafana Aplication Load Balancer'
+      FromPort: 443
+      GroupId: !Ref GrafanaALBSG
+      IpProtocol: 'tcp'
+      ToPort: 443
+
+  RouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref GrafanaVPC
+
+  GrafanaRecordset:
+    Type: AWS::Route53::RecordSetGroup
+    DependsOn: GrafanaLoadBalancer
+    Properties:
+      HostedZoneName:  !Ref HostedzoneNameParameter
+      Comment: Redirect to LoadBalancer to terminate HTTPS
+      RecordSets:
+      - Name: !Ref RecordsetNameParameter
+        Type: A
+        AliasTarget:
+          HostedZoneId: !GetAtt GrafanaLoadBalancer.CanonicalHostedZoneID
+          DNSName: !GetAtt GrafanaLoadBalancer.DNSName
+
+  GrafanaLoadBalancer:
+    Type: "AWS::ElasticLoadBalancingV2::LoadBalancer"
+    Properties:
+      IpAddressType: "ipv4"
+      Name: "GrafanaLB2"
+      Scheme: "internet-facing"
+      SecurityGroups:
+        - !Ref GrafanaALBSG
+      Subnets:
+        - subnet-5ee86617
+        - subnet-f2af3295
+      Tags:
+      - Key: Owner
+        Value: !Ref StackOwner
+      Type: "application"
+
+  GrafanaTarget:
+    Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
+    Properties:
+      HealthCheckEnabled: true
+      HealthCheckIntervalSeconds: 30
+      HealthCheckPath: /
+      HealthCheckPort: '3000'
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 5
+      Matcher:
+        HttpCode: '200-499'
+      Name: GrafanaTarget
+      Port: 3000
+      Protocol: HTTP
+      Tags:
+        - Key: Owner
+          Value: !Ref StackOwner
+      TargetType: instance
+      Targets:
+        - Id: i-06fecdc265f4b5e0c
+          Port: 3000
+      VpcId: !Ref GrafanaVPC
+  
+  GrafanaLoadBalancerHTTPSListener:
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
+    Properties:
+      Certificates:
+        - CertificateArn: !Ref AWSCert
+      DefaultActions: #required
+        - Type: forward
+          TargetGroupArn: !Ref GrafanaTarget
+      LoadBalancerArn: !Ref GrafanaLoadBalancer
+      Port: 443
+      Protocol: 'HTTPS'
+      SslPolicy: 'ELBSecurityPolicy-2016-08'
+
+  GrafanaLoadBalancerHTTPListener:
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
+    Properties:
+      DefaultActions: #required
+        - Type: forward
+          TargetGroupArn: !Ref GrafanaTarget
+      LoadBalancerArn: !Ref GrafanaLoadBalancer
+      Port: 80
+      Protocol: 'HTTP'
+
+  GrafanaLoadBalancerListenerCert:
+    Type: AWS::ElasticLoadBalancingV2::ListenerCertificate
+    Properties:
+      Certificates:
+      - CertificateArn:  !Ref AWSCert
+      ListenerArn: !Ref GrafanaLoadBalancerHTTPSListener
+
+  
+  
+Outputs:
+  GrafanaVPCId:
+    Description: The VPC created
+    Value: !Ref GrafanaVPC
+    Export: 
+      Name: "VPC-Id"
