@@ -93,8 +93,8 @@ Resources:
       SecurityGroups:
         - !Ref GrafanaALBSG
       Subnets:
-        - subnet-5ee86617
-        - subnet-f2af3295
+        - !Select [ 0, !Ref GrafanaSubnets ]
+        - !Select [ 1, !Ref GrafanaSubnets ]
       Tags:
       - Key: Owner
         Value: !Ref StackOwner
@@ -156,11 +156,11 @@ Resources:
 
   
 Outputs:
-  GrafanaVPCId:
-    Description: The VPC created
-    Value: !Ref GrafanaVPC
-    Export: 
-      Name: "VPC-Id"
+#  GrafanaVPCId:
+#    Description: The VPC created
+#    Value: !Ref GrafanaVPC
+#    Export: 
+#      Name: "VPC-Id"
   
   GrafanaURL:
     Description: The URL created for accessing Grafana
