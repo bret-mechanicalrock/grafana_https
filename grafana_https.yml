@@ -14,9 +14,9 @@ Parameters:
     Default: 'mrsandbox.rocks.'
 
   RecordsetNameParameter:
-    Description: This will be the public name of the URI to reach Grafana. It MUST end with the '.' character!
+    Description: This will be the prefix of the URL to access Grafana.  Do not end with the '.' character!
     Type: String
-    Default: 'grafana.mrsandbox.rocks.'
+    Default: 'grafana'
 
   AWSCert:
     Description: The SSL certificate registered with AWS for the URI
@@ -78,7 +78,7 @@ Resources:
       HostedZoneName:  !Ref HostedzoneNameParameter
       Comment: Redirect to LoadBalancer to terminate HTTPS
       RecordSets:
-      - Name: !Ref RecordsetNameParameter
+      - Name: !Sub '${RecordsetNameParameter}.${HostedzoneNameParameter}'
         Type: A
         AliasTarget:
           HostedZoneId: !GetAtt GrafanaLoadBalancer.CanonicalHostedZoneID
@@ -129,7 +129,7 @@ Resources:
     Properties:
       Certificates:
         - CertificateArn: !Ref AWSCert
-      DefaultActions: #required
+      DefaultActions:
         - Type: forward
           TargetGroupArn: !Ref GrafanaTarget
       LoadBalancerArn: !Ref GrafanaLoadBalancer
@@ -140,7 +140,7 @@ Resources:
   GrafanaLoadBalancerHTTPListener:
     Type: "AWS::ElasticLoadBalancingV2::Listener"
     Properties:
-      DefaultActions: #required
+      DefaultActions:
         - Type: forward
           TargetGroupArn: !Ref GrafanaTarget
       LoadBalancerArn: !Ref GrafanaLoadBalancer
@@ -155,10 +155,16 @@ Resources:
       ListenerArn: !Ref GrafanaLoadBalancerHTTPSListener
 
   
-  
 Outputs:
   GrafanaVPCId:
     Description: The VPC created
     Value: !Ref GrafanaVPC
     Export: 
       Name: "VPC-Id"
+  
+  GrafanaURL:
+    Description: The URL created for accessing Grafana
+    Export:
+      Name: "GrafanaURL"
+    Value: 
+      !Sub 'https://${RecordsetNameParameter}.${HostedzoneNameParameter}'
