@@ -33,6 +33,16 @@ Parameters:
     Type: CommaDelimitedList
     Default: 'subnet-5ee86617, subnet-f2af3295'
   
+  GrafanaInstanceParameter:
+    Description: The instance ID of the EC2 hosting Grafana
+    Type: AWS::EC2::Instance::Id
+    Default: i-06fecdc265f4b5e0c
+  
+  GrafanaPortParameter:
+    Description: The port accessing Grafana
+    Type: Number
+    Default: 3000
+  
 
 Resources:  
 
@@ -113,15 +123,15 @@ Resources:
       Matcher:
         HttpCode: '200-499'
       Name: GrafanaTarget
-      Port: 3000
+      Port: !Ref GrafanaPortParameter
       Protocol: HTTP
       Tags:
         - Key: Owner
           Value: !Ref StackOwner
       TargetType: instance
       Targets:
-        - Id: i-06fecdc265f4b5e0c
-          Port: 3000
+        - Id: !Ref GrafanaInstanceParameter
+          Port: !Ref GrafanaPortParameter
       VpcId: !Ref GrafanaVPC
   
   GrafanaLoadBalancerHTTPSListener:
@@ -156,12 +166,6 @@ Resources:
 
   
 Outputs:
-#  GrafanaVPCId:
-#    Description: The VPC created
-#    Value: !Ref GrafanaVPC
-#    Export: 
-#      Name: "VPC-Id"
-  
   GrafanaURL:
     Description: The URL created for accessing Grafana
     Export:
