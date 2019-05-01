@@ -26,17 +26,17 @@ Parameters:
   GrafanaVPC:
     Description: VPC Grafana and subnets are in
     Type: AWS::EC2::VPC::Id
-    Default: 'vpc-a2418bc5'
+    Default: 'vpc-e6eccb81'
 
   GrafanaSubnets:
     Description: Subnets in the VPC
     Type: CommaDelimitedList
-    Default: 'subnet-5ee86617, subnet-f2af3295'
+    Default: 'subnet-67d3dc00,subnet-2611af7e'
   
   GrafanaInstanceParameter:
     Description: The instance ID of the EC2 hosting Grafana
     Type: AWS::EC2::Instance::Id
-    Default: i-06fecdc265f4b5e0c
+    Default: i-0fd798ef52ee0b2e8
   
   GrafanaPortParameter:
     Description: The port accessing Grafana
