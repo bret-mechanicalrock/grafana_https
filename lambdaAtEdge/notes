@@ -1,0 +1,31 @@
+Components:
+Grafana instance
+    Represented in my example with EC2 instance
+HTTPS access to Grafana instance
+    Defines domain and URL used for Cognito Client Sign-in & Sign-out URLs
+Cognito User Pool for authentication
+S3 Image bucket
+    pre-existing
+CloudFront & Lambda@Edge to guard access to S3 Image bucket referencing Cognito User Pool
+    'Artifact bucket' & 'Target bucket' required for deployment
+
+
+Actions:
+Cloudformation template to create Cognito user pool
+  Perhaps steal from AWS LambdaAtEdge solution?
+  Push reference into SSM Parameter store
+    where? region: 'ap-southeast-2'
+  Definition requires 'sign-in' and 'sign-out' URLs from the associated application
+  Existing Grafana Cognito client:
+    https://ap-southeast-2.console.aws.amazon.com/cognito/users/?region=ap-southeast-2#/pool/ap-southeast-2_KbwqC6jz0/app-integration-app-settings?_k=kjlbza
+    Sign in and sign out URLs
+        Callback URL(s): https://grafana.mrsandbox.rocks, https://grafana.mrsandbox.rocks/login/generic_oauth
+        Sign out URL(s): https://grafana.mrsandbox.rocks
+
+SSM Parameter store
+  Containing Cognito user pool reference from other template
+    where? region: 'ap-southeast-2'
+
+'Artifact bucket' & 'Target bucket'
+  Target need not be us-east-1, but tamplate must be deployed there
+  Artifact bucket - not sure.  Any reason it can't be us-east-1?

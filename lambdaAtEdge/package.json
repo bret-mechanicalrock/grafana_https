@@ -1,0 +1,16 @@
+{
+  "name": "austal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "got": "^9.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "jwk-to-pem": "^2.0.1"
+  }
+}
