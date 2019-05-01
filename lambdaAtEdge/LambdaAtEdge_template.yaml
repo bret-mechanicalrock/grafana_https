@@ -1,0 +1,127 @@
+Transform: 'AWS::Serverless-2016-10-31'
+Parameters:
+  BucketName:
+    Type: String
+    Description: bucket name
+  CognitoUserPoolId:
+    Type: String
+    Description: Path to SSM parameter store. This variable must be created prior to launching this template.
+    Default: /cognito/userPoolId
+    AllowedValues:
+      - /cognito/userPoolId
+Resources:
+  OriginAccessIdentity:
+    Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity'
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: CloudFront Access Identity
+  WebBucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      Bucket: !Ref BucketName
+      PolicyDocument:
+        Statement:
+          - Action: 's3:GetObject'
+            Effect: Allow
+            Principal:
+              CanonicalUser:
+                'Fn::GetAtt':
+                  - OriginAccessIdentity
+                  - S3CanonicalUserId
+            Resource:
+              'Fn::Sub':
+                - 'arn:aws:s3:::${BucketName}'
+        Version: '2012-10-17'
+  ViewerRequestLambdaRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: 'sts:AssumeRole'
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+                - edgelambda.amazonaws.com
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+        - 'arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess'
+      Policies:
+        - PolicyDocument:
+            Statement:
+              - Action:
+                  - 'ssm:GetParameter'
+                  - 'ssm:GetParameters'
+                  - 'ssm:GetParametersByPath'
+                Effect: Allow
+                Resource:
+                  - 'Fn::Sub': >-
+                      arn:aws:ssm:ap-southeast-2:${AWS::AccountId}:parameter${CognitoUserPoolId}
+            Version: '2012-10-17'
+          PolicyName: lambdaPolicy
+  ViewerRequestLambda:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Runtime: nodejs8.10
+      CodeUri: '.'
+      Handler: index.handler
+      Role:
+        'Fn::GetAtt':
+          - ViewerRequestLambdaRole
+          - Arn
+      AutoPublishAlias: live
+      Timeout: 10
+  CFWebDistribution:
+    Type: 'AWS::CloudFront::Distribution'
+    Properties:
+      DistributionConfig:
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          CachedMethods:
+            - GET
+            - HEAD
+          Compress: false
+          DefaultTTL: 0
+          ForwardedValues:
+            Cookies:
+              Forward: all
+            QueryString: true
+          MaxTTL: 0
+          MinTTL: 0
+          TargetOriginId: origin
+          ViewerProtocolPolicy: redirect-to-https
+          LambdaFunctionAssociations:
+            - EventType: viewer-request
+              LambdaFunctionARN:
+                'Fn::GetAtt':
+                  - ViewerRequestLambda.Version
+                  - Arn
+        Enabled: true
+        HttpVersion: http2
+        IPV6Enabled: true
+        Origins:
+          - DomainName:
+              'Fn::Sub':
+                - ${BucketName}.s3.amazonaws.com
+                - DomainName
+            Id: origin
+            S3OriginConfig:
+              OriginAccessIdentity:
+                'Fn::Join':
+                  - ''
+                  - - origin-access-identity/cloudfront/
+                    - Ref: OriginAccessIdentity
+        PriceClass: PriceClass_All
+
+Outputs:
+  cloudFrontDomainName:
+    Value:
+      'Fn::GetAtt':
+        - CFWebDistribution
+        - DomainName
+  cloudFrontDistributionId:
+    Value:
+      Ref: CFWebDistribution
