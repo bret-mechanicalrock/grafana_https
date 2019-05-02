@@ -29,3 +29,53 @@ SSM Parameter store
 'Artifact bucket' & 'Target bucket'
   Target need not be us-east-1, but tamplate must be deployed there
   Artifact bucket - not sure.  Any reason it can't be us-east-1?
+
+Install sequence
+grafana_https stack in Sydney - provides HTTPS redirect to existing Grafana instance with existing Domain name and AWS cert.
+Cognito_template stack in us-east-1 - provides Cognito User Pool ID and Client ID.
+
+Make changes to grafana.ini file using information from the above set ups:
+----
+;root_url = http://localhost:3000
+root_url = https://grafana.mrsandbox.rocks
+----
+#################################### Generic OAuth ##########################
+[auth.generic_oauth]
+enabled = true
+name = OAuth
+allow_sign_up = true
+client_id = 7jgg3lcbsc6o5m190u2q5mv3fl
+client_secret = 1329o39fu2r91cp1f3lug6qshvjgtct5f2kvoardkh9hpoanvl0c
+;scopes = user:email,read:org
+scopes = openid profile email
+auth_url = https://mrgrafana.auth.ap-southeast-2.amazoncognito.com/oauth2/authorize
+token_url = https://mrgrafana.auth.ap-southeast-2.amazoncognito.com/oauth2/token
+api_url = https://mrgrafana.auth.ap-southeast-2.amazoncognito.com/oauth2/userInfo
+----
+
+==== from running system ====
+;root_url = http://localhost:3000
+root_url = https://grafana.mrsandbox.rocks
+----
+#################################### Generic OAuth ##########################
+[auth.generic_oauth]
+enabled = true
+name = OAuth
+allow_sign_up = true
+client_id = 7jgg3lcbsc6o5m190u2q5mv3fl
+client_secret = 1329o39fu2r91cp1f3lug6qshvjgtct5f2kvoardkh9hpoanvl0c
+;scopes = user:email,read:org
+scopes = openid profile email
+auth_url = https://mrgrafana.auth.ap-southeast-2.amazoncognito.com/oauth2/authorize
+token_url = https://mrgrafana.auth.ap-southeast-2.amazoncognito.com/oauth2/token
+api_url = https://mrgrafana.auth.ap-southeast-2.amazoncognito.com/oauth2/userInfo
+----
+#################################### Basic Auth ##########################
+[auth.basic]
+;enabled = true
+enabled = false
+==== from running system ====
+
+
+https://<your_domain>/login?response_type=code&client_id=<your_app_client_id>&redirect_uri=<your_callback_url>
+  - https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-app-integration.html
