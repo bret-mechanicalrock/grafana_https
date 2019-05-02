@@ -1,5 +1,7 @@
 Description: >
-    Amazon Cognito User Pool and User Pool Client deployment for Edge Authentication sample stack
+    Amazon Cognito User Pool and User Pool Client deployment.
+    This template creates a Cognito User Pool and associated client.create_user_pool.
+    This is derived partly from code by AWS under the Apache License.
     You will be billed for the AWS resources used if you create a stack from this template. **NOTICE** Copyright 2017 Amazon.com, Inc. or its affiliates.
     All Rights Reserved. Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
     http://www.apache.org/licenses/LICENSE-2.0 or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -13,7 +15,7 @@ Parameters:
     Default: grafana.mrsandbox.rocks
   Environment:
     Type: String
-    Description: Arbitrary deployment label, such as 'dev', or 'production'
+    Description: Arbitrary deployment label, such as 'dev', or 'production, or Grafana'
     Default: dev
 
 Resources:
@@ -139,3 +141,12 @@ Outputs:
   ClientId:
     Description: Amazon Cognito user pool client ID
     Value: !GetAtt CreateUserPoolAndClient.ClientId
+  AuthURL:
+    Description: Value for Oauth configuration
+    Value: !Sub "auth_url = https://${CreateUserPoolAndClient.ClientId}.auth.${AWS::Region}.amazoncognito.com/oauth2/authorize"
+  TokenURL:
+    Description: Value for Oauth configuration
+    Value: !Sub "token_url = https://${CreateUserPoolAndClient.ClientId}.auth.${AWS::Region}.amazoncognito.com/oauth2/token"
+  ApiURL:
+    Description: Value for Oauth configuration
+    Value: !Sub "api_url = https://${CreateUserPoolAndClient.ClientId}.auth.${AWS::Region}.amazoncognito.com/oauth2/userInfo"
