@@ -21,7 +21,7 @@ Resources:
       Bucket: !Ref BucketName
       PolicyDocument:
         Statement:
-          - Action: 's3:GetObject'
+          - Action: ["s3:GetObject"]
             Effect: Allow
             Principal:
               CanonicalUser:
@@ -29,8 +29,9 @@ Resources:
                   - OriginAccessIdentity
                   - S3CanonicalUserId
             Resource:
-              'Fn::Sub':
-                - 'arn:aws:s3:::${BucketName}'
+              # 'Fn::Sub':
+              #   - 'arn:aws:s3:::${BucketName}'
+              'Fn::Sub': arn:aws:s3:::${BucketName}/*
         Version: '2012-10-17'
   ViewerRequestLambdaRole:
     Type: 'AWS::IAM::Role'
@@ -55,8 +56,9 @@ Resources:
                   - 'ssm:GetParametersByPath'
                 Effect: Allow
                 Resource:
-                  - 'Fn::Sub': >-
-                      arn:aws:ssm:ap-southeast-2:${AWS::AccountId}:parameter${CognitoUserPoolId}
+                  # - 'Fn::Sub': >-
+                  #     arn:aws:ssm:ap-southeast-2:${AWS::AccountId}:parameter${CognitoUserPoolId}
+                  - 'Fn::Sub': arn:aws:ssm:ap-southeast-2:${AWS::AccountId}:parameter${CognitoUserPoolId}
             Version: '2012-10-17'
           PolicyName: lambdaPolicy
   ViewerRequestLambda:
@@ -70,7 +72,7 @@ Resources:
           - ViewerRequestLambdaRole
           - Arn
       AutoPublishAlias: live
-      Timeout: 10
+      Timeout: 5
   CFWebDistribution:
     Type: 'AWS::CloudFront::Distribution'
     Properties:
@@ -95,25 +97,23 @@ Resources:
           ViewerProtocolPolicy: redirect-to-https
           LambdaFunctionAssociations:
             - EventType: viewer-request
-              LambdaFunctionARN:
-                'Fn::GetAtt':
-                  - ViewerRequestLambda.Version
-                  - Arn
+              LambdaFunctionARN: !Ref ViewerRequestLambda.Version
         Enabled: true
         HttpVersion: http2
         IPV6Enabled: true
         Origins:
           - DomainName:
               'Fn::Sub':
-                - ${BucketName}.s3.amazonaws.com
-                - DomainName
+                ${BucketName}.s3.amazonaws.com
+                # - ${BucketName}.s3.amazonaws.com
+                # - DomainName
             Id: origin
             S3OriginConfig:
               OriginAccessIdentity:
                 'Fn::Join':
                   - ''
                   - - origin-access-identity/cloudfront/
-                    - Ref: OriginAccessIdentity
+                    - !Ref OriginAccessIdentity
         PriceClass: PriceClass_All
 
 Outputs:
@@ -124,4 +124,4 @@ Outputs:
         - DomainName
   cloudFrontDistributionId:
     Value:
-      Ref: CFWebDistribution
+      !Ref CFWebDistribution
