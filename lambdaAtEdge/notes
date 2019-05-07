@@ -79,3 +79,38 @@ enabled = false
 
 https://<your_domain>/login?response_type=code&client_id=<your_app_client_id>&redirect_uri=<your_callback_url>
   - https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-app-integration.html
+
+
+grafana_1   | t=2019-05-07T08:40:36+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=125.209.149.13 time_ms=0 size=29 referer=
+grafana_1   | t=2019-05-07T08:40:40+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
+grafana_1   | t=2019-05-07T08:40:41+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/login/generic_oauth status=302 remote_addr=125.209.149.13 time_ms=0 size=357 referer=https://grafana.mrsandbox.rocks/login
+grafana_1   | t=2019-05-07T08:40:42+0000 lvl=info msg="state check" logger=oauth queryState=57eb421124e46de504be4bca02576617e9e3ed8e68fbde930be6a46e01d1ec6c cookieState=57eb421124e46de504be4bca02576617e9e3ed8e68fbde930be6a46e01d1ec6c
+grafana_1   | t=2019-05-07T08:40:43+0000 lvl=eror msg=login.OAuthLogin(NewTransportWithCode) logger=context userId=0 orgId=0 uname= error="oauth2: cannot fetch token: 400 Bad Request\nResponse: {\"error\":\"invalid_client\"}"
+grafana_1   | t=2019-05-07T08:40:43+0000 lvl=eror msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/login/generic_oauth status=500 remote_addr=125.209.149.13 time_ms=1002 size=1743 referer=https://grafana.mrsandbox.rocks/login
+grafana_1   | t=2019-05-07T08:40:50+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
+grafana_1   | t=2019-05-07T08:40:52+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.46.227 time_ms=0 size=29 referer=
+grafana_1   | t=2019-05-07T08:40:55+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.7.34 time_ms=0 size=29 referer=
+
+
+
+grafana_1   | t=2019-05-07T08:49:05+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
+grafana_1   | t=2019-05-07T08:49:06+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.3.195 time_ms=0 size=29 referer=
+grafana_1   | t=2019-05-07T08:49:06+0000 lvl=eror msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/login/generic_oauth status=500 remote_addr=125.209.149.13 time_ms=0 size=1742 referer="https://3ecgnglmdu0u6qelrog95cfsqa.auth.us-east-1.amazoncognito.com/confirm?access_type=online&client_id=3ecgnglmdu0u6qelrog95cfsqa&redirect_uri=https%3A%2F%2Fgrafana.mrsandbox.rocks%2Flogin%2Fgeneric_oauth&response_type=code&scope=openid+profile+email&state=IBLfcgiDVWViWp8C-tWNA2dP8Ghg2efqTQQoLktyqFc%3D"
+grafana_1   | t=2019-05-07T08:49:15+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
+grafana_1   | t=2019-05-07T08:49:22+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.46.227 time_ms=0 size=29 referer=
+
+grafana_1   | t=2019-05-07T08:51:36+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.3.195 time_ms=0 size=29 referer=
+grafana_1   | t=2019-05-07T08:51:40+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/login/generic_oauth status=302 remote_addr=125.209.149.13 time_ms=0 size=357 referer=https://grafana.mrsandbox.rocks/login
+grafana_1   | t=2019-05-07T08:51:40+0000 lvl=info msg="state check" logger=oauth queryState=7544400075fe260965c4e1563ae3f1c1d5b12479642a3509c4c2335a4b6f57d9 cookieState=7544400075fe260965c4e1563ae3f1c1d5b12479642a3509c4c2335a4b6f57d9
+grafana_1   | t=2019-05-07T08:51:41+0000 lvl=eror msg=login.OAuthLogin(NewTransportWithCode) logger=context userId=0 orgId=0 uname= error="oauth2: cannot fetch token: 400 Bad Request\nResponse: {\"error\":\"invalid_client\"}"
+grafana_1   | t=2019-05-07T08:51:41+0000 lvl=eror msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/login/generic_oauth status=500 remote_addr=125.209.149.13 time_ms=976 size=1743 referer=https://grafana.mrsandbox.rocks/login
+grafana_1   | t=2019-05-07T08:51:45+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
+
+
+With Client Secret:
+grafana_1   | t=2019-05-07T11:15:06+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
+grafana_1   | t=2019-05-07T11:15:07+0000 lvl=eror msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/login/generic_oauth status=500 remote_addr=1.127.111.37 time_ms=0 size=1742 referer="https://63ldqhk7306e4bni7j4aplh7mt.auth.us-east-1.amazoncognito.com/confirm?access_type=online&client_id=63ldqhk7306e4bni7j4aplh7mt&redirect_uri=https%3A%2F%2Fgrafana.mrsandbox.rocks%2Flogin%2Fgeneric_oauth&response_type=code&scope=openid+profile+email&state=4eRBlvqsErtRjprZDELRG6CIhe4jQ2mAzKCYzPKociw%3D"
+grafana_1   | t=2019-05-07T11:15:12+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.3.195 time_ms=0 size=29 referer=
+grafana_1   | t=2019-05-07T11:15:16+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
+grafana_1   | t=2019-05-07T11:15:26+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
+... manybe it doesn't like 'login/generic_oauth'?

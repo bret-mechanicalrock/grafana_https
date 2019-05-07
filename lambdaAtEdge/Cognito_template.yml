@@ -83,6 +83,7 @@ Resources:
                       CreatedUserPoolId = response['UserPool']['Id']
                       response = client.create_user_pool_client(
                           UserPoolId=CreatedUserPoolId,
+                          GenerateSecret=True,
                           ClientName=Environment + '-client',
                           ReadAttributes=[
                               'address', 'birthdate', 'email', 'email_verified', 'family_name', 'gender', 'given_name', 'locale', 'middle_name', 'name', 'nickname', 'phone_number', 'phone_number_verified', 'picture', 'preferred_username', 'profile', 'updated_at', 'website', 'zoneinfo'
@@ -98,12 +99,14 @@ Resources:
                           AllowedOAuthFlowsUserPoolClient=True
                       )
                       CreatedClientId = response['UserPoolClient']['ClientId']
+                      CreatedClientSecret = response['UserPoolClient']['ClientSecret']
                       response = client.create_user_pool_domain(
                           Domain = str(CreatedClientId),
                           UserPoolId = CreatedUserPoolId
                       )
                       responseData['UserPoolId'] = CreatedUserPoolId
                       responseData['ClientId'] = CreatedClientId
+                      responseData['ClientSecret'] = CreatedClientSecret
                       print("SUCCESS, ResponseData=" + str(responseData))
                       cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData, "CustomResourcePhysicalID")
                   else:
@@ -141,6 +144,9 @@ Outputs:
   ClientId:
     Description: Amazon Cognito user pool client ID
     Value: !GetAtt CreateUserPoolAndClient.ClientId
+  ClientSecret:
+    Description: Amazon Cognito user pool client secret
+    Value: !GetAtt CreateUserPoolAndClient.ClientSecret
   AuthURL:
     Description: Value for Oauth configuration
     Value: !Sub "auth_url = https://${CreateUserPoolAndClient.ClientId}.auth.${AWS::Region}.amazoncognito.com/oauth2/authorize"
