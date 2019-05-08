@@ -15,7 +15,7 @@ Parameters:
     Default: grafana.mrsandbox.rocks
   Environment:
     Type: String
-    Description: Arbitrary deployment label, such as 'dev', or 'production, or Grafana'
+    Description: Arbitrary deployment label, such as 'dev', or 'production', or 'Grafana'
     Default: dev
 
 Resources:
@@ -93,9 +93,9 @@ Resources:
                           ],
                           SupportedIdentityProviders=['COGNITO'],
                           CallbackURLs=['https://' + BaseUrl + '','https://' + BaseUrl + '/login','https://' + BaseUrl + '/login/generic_oauth'],
-                          LogoutURLs=['https://' + BaseUrl + '/login'],
+                          LogoutURLs=['https://' + BaseUrl + '/login','https://' + BaseUrl + '/logout'],
                           AllowedOAuthFlows=['implicit','code'],
-                          AllowedOAuthScopes=['email','aws.cognito.signin.user.admin','openid','profile'],
+                          AllowedOAuthScopes=['email','openid','profile'],
                           AllowedOAuthFlowsUserPoolClient=True
                       )
                       CreatedClientId = response['UserPoolClient']['ClientId']
