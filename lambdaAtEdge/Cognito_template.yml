@@ -95,8 +95,8 @@ Resources:
                           CallbackURLs=['https://' + BaseUrl + '','https://' + BaseUrl + '/login/generic_oauth'],
                           LogoutURLs=['https://' + BaseUrl + '/logout'],
                           AllowedOAuthFlows=['code','implicit'],
-                          AllowedOAuthScopes=['email','openid','profile'],
-                          AllowedOAuthFlowsUserPoolClient=True
+                          AllowedOAuthScopes=['email','openid','profile'] #,
+                          # AllowedOAuthFlowsUserPoolClient=True
                       )
                       CreatedClientId = response['UserPoolClient']['ClientId']
                       CreatedClientSecret = response['UserPoolClient']['ClientSecret']
