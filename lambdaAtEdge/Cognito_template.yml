@@ -93,7 +93,7 @@ Resources:
                           ],
                           SupportedIdentityProviders=['COGNITO'],
                           CallbackURLs=['https://' + BaseUrl + '','https://' + BaseUrl + '/login/generic_oauth'],
-                          LogoutURLs=['https://' + BaseUrl + '/logout'],
+                          LogoutURLs=['https://' + BaseUrl + '','https://' + BaseUrl + '/logout'],
                           AllowedOAuthFlows=['code','implicit'],
                           AllowedOAuthScopes=['email','openid','profile'] #,
                           # AllowedOAuthFlowsUserPoolClient=True
