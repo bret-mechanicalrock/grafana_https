@@ -92,11 +92,13 @@ Resources:
                               'address', 'birthdate', 'email', 'family_name', 'gender', 'given_name', 'locale', 'middle_name', 'name', 'nickname', 'phone_number', 'picture', 'preferred_username', 'profile', 'updated_at', 'website', 'zoneinfo'
                           ],
                           SupportedIdentityProviders=['COGNITO'],
-                          CallbackURLs=['https://' + BaseUrl + '','https://' + BaseUrl + '/login/generic_oauth'],
-                          LogoutURLs=['https://' + BaseUrl + '','https://' + BaseUrl + '/logout'],
+                          # CallbackURLs=['https://' + BaseUrl + '','https://' + BaseUrl + '/login/generic_oauth'],
+                          # LogoutURLs=['https://' + BaseUrl + '','https://' + BaseUrl + '/logout'],
+                          CallbackURLs=['https://' + BaseUrl + '/login/generic_oauth'],
+                          LogoutURLs=['https://' + BaseUrl + ''],
                           AllowedOAuthFlows=['code','implicit'],
-                          AllowedOAuthScopes=['email','openid','profile'] #,
-                          # AllowedOAuthFlowsUserPoolClient=True
+                          AllowedOAuthScopes=['email','openid','profile'],
+                          AllowedOAuthFlowsUserPoolClient=True
                       )
                       CreatedClientId = response['UserPoolClient']['ClientId']
                       CreatedClientSecret = response['UserPoolClient']['ClientSecret']
