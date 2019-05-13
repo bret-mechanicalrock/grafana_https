@@ -114,3 +114,113 @@ grafana_1   | t=2019-05-07T11:15:12+0000 lvl=info msg="Request Completed" logger
 grafana_1   | t=2019-05-07T11:15:16+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
 grafana_1   | t=2019-05-07T11:15:26+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
 ... manybe it doesn't like 'login/generic_oauth'?
+
+
+                          CallbackURLs=['https://' + BaseUrl + '','https://' + BaseUrl + '/login','https://' + BaseUrl + '/login/generic_oauth'],
+                          LogoutURLs=['https://' + BaseUrl + '/login'],
+grafana_1   | t=2019-05-08T01:27:44+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
+grafana_1   | t=2019-05-08T01:27:48+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/login/generic_oauth status=302 remote_addr=125.209.133.123 time_ms=0 size=357 referer=https://grafana.mrsandbox.rocks/login
+grafana_1   | t=2019-05-08T01:27:49+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.3.195 time_ms=0 size=29 referer=
+
+grafana_1   | t=2019-05-08T01:30:04+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
+grafana_1   | t=2019-05-08T01:30:05+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.46.227 time_ms=0 size=29 referer=
+grafana_1   | t=2019-05-08T01:30:06+0000 lvl=eror msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/login/generic_oauth status=500 remote_addr=125.209.133.123 time_ms=0 size=1742 referer="https://6ns2hh8ltisc7h7p3aev0t9flu.auth.us-east-1.amazoncognito.com/confirm?access_type=online&client_id=6ns2hh8ltisc7h7p3aev0t9flu&redirect_uri=https%3A%2F%2Fgrafana.mrsandbox.rocks%2Flogin%2Fgeneric_oauth&response_type=code&scope=openid+profile+email&state=Tbb17JosLolsZEkSd2mNPgJc-3Ms_TNu836ojfyEZpQ%3D"
+grafana_1   | t=2019-05-08T01:30:09+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.16.89 time_ms=0 size=29 referer=
+
+grafana_1   | t=2019-05-08T01:32:04+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
+grafana_1   | t=2019-05-08T01:32:05+0000 lvl=eror msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/login/generic_oauth status=500 remote_addr=125.209.133.123 time_ms=0 size=1742 referer="https://6ns2hh8ltisc7h7p3aev0t9flu.auth.us-east-1.amazoncognito.com/confirm?access_type=online&client_id=6ns2hh8ltisc7h7p3aev0t9flu&redirect_uri=https%3A%2F%2Fgrafana.mrsandbox.rocks%2Flogin%2Fgeneric_oauth&response_type=code&scope=openid+profile+email&state=Tbb17JosLolsZEkSd2mNPgJc-3Ms_TNu836ojfyEZpQ%3D"
+grafana_1   | t=2019-05-08T01:32:05+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.46.227 time_ms=0 size=29 referer=
+
+grafana_1   | t=2019-05-08T01:33:39+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/login/generic_oauth status=302 remote_addr=125.209.133.123 time_ms=0 size=357 referer=https://grafana.mrsandbox.rocks/login
+grafana_1   | t=2019-05-08T01:33:39+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.16.89 time_ms=0 size=29 referer=
+grafana_1   | t=2019-05-08T01:33:40+0000 lvl=info msg="state check" logger=oauth queryState=f4c454305c9d6d026ec0b01e4069af231ec226503080d9ab73da88ffcc0615f1 cookieState=f4c454305c9d6d026ec0b01e4069af231ec226503080d9ab73da88ffcc0615f1
+grafana_1   | t=2019-05-08T01:33:41+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.7.34 time_ms=0 size=29 referer=
+grafana_1   | t=2019-05-08T01:33:41+0000 lvl=dbug msg="OAuthLogin Got token" logger=oauth token="&{AccessToken:eyJraWQiOiJlVHlBREYxZXBuRzRGSG5OY09ncGw1ZmM0alN4b29DOTdydnhUTHVzaFJzPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI1MmY1MmRhYS1lM2ZkLTQzNzQtOWUzZi00NTBhZDBhYzA4MTEiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiYXV0aF90aW1lIjoxNTU3Mjc5MjIxLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9hSUFvSVlyQU4iLCJleHAiOjE1NTcyODI4MjEsImlhdCI6MTU1NzI3OTIyMSwidmVyc2lvbiI6MiwianRpIjoiNDdmMzBmMGQtN2QwYS00ZDkzLTlkZTUtOGE0MjhjYzUxNmUzIiwiY2xpZW50X2lkIjoiNm5zMmhoOGx0aXNjN2g3cDNhZXYwdDlmbHUiLCJ1c2VybmFtZSI6ImJyZXQud2FsZG93In0.IXOjfIYVGMYMAsuqizxLMXyrphnS8CMdv70gjVU2Pxv2ZA54tewISEMKvhnQD1nISWVTvec0pAw-_1vCF_JZHMZcHFohuqAP9bGSsGJFo3FolHYQ4aHcwHWlswDRyoY2gUSanWgsad4aDtdYEjI-XSJqipGVxFuHYjCCuJULn6F2yV9RXGGFjey6MMJRcWcwa1lB2ujS-tiuZJq9k9-W31ZlcybVZPxrS7WhRZYzpVr-kfVEn_4FRfz0GPRNSnrMo1iji5xckqeydADuMP3fVVW8uNYNYhShLzZJ3FphOUP7Net1iMT5H_mlSj6-3W4dcpeIUO48rwjsBWh5CwIQmg TokenType:Bearer RefreshToken:eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.OTa_zqCONM8kQxEtgZV0P84at-gKOSO1DupOvihyiPEsS4am9YhWwhBGgZQ2bixE0xXrsJK79w67rqtnSV4VfAhCcwjVSjcXxQPg0qYV30YZ2XKFd9MxTr0VvU9MG8RKpmTINBcQn-HTDDnYfXVug--rCzxUYnLlPQXCx8vhDzyBgpCmjUabTU5V4PZHz7DidyMbIb016iRgm8iX6XZ52SrEwT4vcSjPw5nrhW1bbuvjt7dN59IaRfsxx458CdgHJkxnak1wd_smVi3AHYSgJT14wEGkqR_TdUFsQzxOh10THk0F1KzJVEN9y9HLUZaNMswEjIv_DFJKfAS0jcHKKw.I6wzlupv9uOKvt2s.nZSPXdeCH7DPZ9er8OxH31CmzXGgFwnvrUh9cDfnmybovuE2w4j1iRozGL8Sx6VbpLzCVt_As-E9njUzRKAeAEMt24uZrlG7DhcJEUoKSzS9-bHyT3ok3kJ9NWNS1M752C3Yho5dBD86OK_kpsp8SH8YmqLqWrJuR7DXCTWZvf9iADAs_ePqOPHotFHdyzlFeODGle0mQKXDuH1FD5L1ySg9nCDCPe8QZKpvOiaHsQSuhTDlDH9gOJQu3mgraBciNlqYnMlRKofep2p8S2gftkWkoC-8ENKvp7Jsp6jLNiI94Hnbch_5PqRkzw4AK6flTvH1RvnT8kHfVZvBIKBYLtXWY0FHetzfvHFiJz1PMwqH2pI7KJ-fijw3JEkGmBu-4pE-LXtOGjzLZFwoQx6iFvxT28dYndn3ycFC5f4iZO_rDSPVQJghP7pUNKbrqSIO77IHzsvowHrVXlC9cOEocDU3kn7X99QXzDrbFDSOfV0-GP9_VGQ2xyoE8jskmCeB8gdwtr-0ZKhcU5_5xC8dv6vo0_E8laSclX7A95eAPDRpHAsSIENq49lEd2FKIZ2zfvnKTUXzh5Mp8ex28q-1Cw4roEIQ_XDj2pXxfhwoRiTYRVkF2G3Zv2sqtRo93d4mRj-Erqrz_1Ha8YCEd45yYATlBVAH43mg9L_sulGGaDwEpy0TZ1T516L7RR0aGZfKycRk8ON2pVvzjVZ6uB4VeVquOGZ4jtirW69oEvFj1tXWv0-pJFqRsMdseCxbXIrAEszRJo_xlURDtgW89fj1Fs1qYSmIkjpnmn8rgzT6B8CzVmo3mjn2nTAy7lBalD4iMtoZRLpPw6omxEUa91oiFAnuLrCLQeAMMii5z0TxN1t2QvGWXTitMsgM_o5vZSHAHaWeYFcVCgFavJg_Yc9uYp1rgSiV1m07QrE5UwCRY7H1_26eZc07KkRRRx_hWpdGH4txN43LTz0Oeg4keIdEQgXVjmNe2dpzovd3qPTxKkQhOLaJpvebt8VyReeA9NeeZ2Kt9SeD0UgDY5Eu8zWkBv6iV3dbJ_ZEFoKYB5-AWlIBSdxbQh8EblFqqSRZdXZYkjBikab3a14TZcSfYEekbs7XglQ2186aWoMxbCYVb6Ymyz_tc1XseKBAyqfTO11u-g6wuuoGEZ8t31kTZHZMhIHzORwBZDqiwQpc_g75g31wvfcJe7-N7WTUaA.Ku5yrf03P2D4pDiYOzkfUw Expiry:2019-05-08 02:33:41.160864482 +0000 UTC m=+4368.576392029 raw:map[token_type:Bearer id_token:eyJraWQiOiJ6UTRJcDRUalJ2OXFjVmdPMW91WkV5WXdseXdoRXJMVkVcLys2VDVPM0Rkbz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiTlhqdHl5Mnhoa2RGNkZvZG1HeHhRZyIsInN1YiI6IjUyZjUyZGFhLWUzZmQtNDM3NC05ZTNmLTQ1MGFkMGFjMDgxMSIsImF1ZCI6IjZuczJoaDhsdGlzYzdoN3AzYWV2MHQ5Zmx1IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNTU3Mjc5MjIxLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9hSUFvSVlyQU4iLCJjb2duaXRvOnVzZXJuYW1lIjoiYnJldC53YWxkb3ciLCJleHAiOjE1NTcyODI4MjEsImlhdCI6MTU1NzI3OTIyMSwiZW1haWwiOiJicmV0LndhbGRvd0BtZWNoYW5pY2Fscm9jay5pbyJ9.hE1y5-AkfZ5jPKpkS0SH36Oqg98ZfsWDmLvSKGuycSJWMy42mUJXNUH-tvgEQnzQVTBb0DbQ_Uv8TVv14WVzoCcR3eRcsADP3pisdEDqs8Ic5r-62MzEu8DQc96HSa64JoaXHs7xej98qvQQHkrZ_cWpvewG6lIBanJdwyumMswnOpdk46J9rUBWqXEpHqe6F_xThPoDXWuMS9BVu95xjM4ZTCyDnPDpm5IB_0Z-xlBBsdr69alSY8sMVeluq5byrbcUgOnHmpX0n_wd46u6zj_PYUekwV9NltazO9cf19dhLjt-AlcKBpHp479y-JDalRtsoIH6eAU6VgA89HKw7w access_token:eyJraWQiOiJlVHlBREYxZXBuRzRGSG5OY09ncGw1ZmM0alN4b29DOTdydnhUTHVzaFJzPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI1MmY1MmRhYS1lM2ZkLTQzNzQtOWUzZi00NTBhZDBhYzA4MTEiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiYXV0aF90aW1lIjoxNTU3Mjc5MjIxLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9hSUFvSVlyQU4iLCJleHAiOjE1NTcyODI4MjEsImlhdCI6MTU1NzI3OTIyMSwidmVyc2lvbiI6MiwianRpIjoiNDdmMzBmMGQtN2QwYS00ZDkzLTlkZTUtOGE0MjhjYzUxNmUzIiwiY2xpZW50X2lkIjoiNm5zMmhoOGx0aXNjN2g3cDNhZXYwdDlmbHUiLCJ1c2VybmFtZSI6ImJyZXQud2FsZG93In0.IXOjfIYVGMYMAsuqizxLMXyrphnS8CMdv70gjVU2Pxv2ZA54tewISEMKvhnQD1nISWVTvec0pAw-_1vCF_JZHMZcHFohuqAP9bGSsGJFo3FolHYQ4aHcwHWlswDRyoY2gUSanWgsad4aDtdYEjI-XSJqipGVxFuHYjCCuJULn6F2yV9RXGGFjey6MMJRcWcwa1lB2ujS-tiuZJq9k9-W31ZlcybVZPxrS7WhRZYzpVr-kfVEn_4FRfz0GPRNSnrMo1iji5xckqeydADuMP3fVVW8uNYNYhShLzZJ3FphOUP7Net1iMT5H_mlSj6-3W4dcpeIUO48rwjsBWh5CwIQmg refresh_token:eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.OTa_zqCONM8kQxEtgZV0P84at-gKOSO1DupOvihyiPEsS4am9YhWwhBGgZQ2bixE0xXrsJK79w67rqtnSV4VfAhCcwjVSjcXxQPg0qYV30YZ2XKFd9MxTr0VvU9MG8RKpmTINBcQn-HTDDnYfXVug--rCzxUYnLlPQXCx8vhDzyBgpCmjUabTU5V4PZHz7DidyMbIb016iRgm8iX6XZ52SrEwT4vcSjPw5nrhW1bbuvjt7dN59IaRfsxx458CdgHJkxnak1wd_smVi3AHYSgJT14wEGkqR_TdUFsQzxOh10THk0F1KzJVEN9y9HLUZaNMswEjIv_DFJKfAS0jcHKKw.I6wzlupv9uOKvt2s.nZSPXdeCH7DPZ9er8OxH31CmzXGgFwnvrUh9cDfnmybovuE2w4j1iRozGL8Sx6VbpLzCVt_As-E9njUzRKAeAEMt24uZrlG7DhcJEUoKSzS9-bHyT3ok3kJ9NWNS1M752C3Yho5dBD86OK_kpsp8SH8YmqLqWrJuR7DXCTWZvf9iADAs_ePqOPHotFHdyzlFeODGle0mQKXDuH1FD5L1ySg9nCDCPe8QZKpvOiaHsQSuhTDlDH9gOJQu3mgraBciNlqYnMlRKofep2p8S2gftkWkoC-8ENKvp7Jsp6jLNiI94Hnbch_5PqRkzw4AK6flTvH1RvnT8kHfVZvBIKBYLtXWY0FHetzfvHFiJz1PMwqH2pI7KJ-fijw3JEkGmBu-4pE-LXtOGjzLZFwoQx6iFvxT28dYndn3ycFC5f4iZO_rDSPVQJghP7pUNKbrqSIO77IHzsvowHrVXlC9cOEocDU3kn7X99QXzDrbFDSOfV0-GP9_VGQ2xyoE8jskmCeB8gdwtr-0ZKhcU5_5xC8dv6vo0_E8laSclX7A95eAPDRpHAsSIENq49lEd2FKIZ2zfvnKTUXzh5Mp8ex28q-1Cw4roEIQ_XDj2pXxfhwoRiTYRVkF2G3Zv2sqtRo93d4mRj-Erqrz_1Ha8YCEd45yYATlBVAH43mg9L_sulGGaDwEpy0TZ1T516L7RR0aGZfKycRk8ON2pVvzjVZ6uB4VeVquOGZ4jtirW69oEvFj1tXWv0-pJFqRsMdseCxbXIrAEszRJo_xlURDtgW89fj1Fs1qYSmIkjpnmn8rgzT6B8CzVmo3mjn2nTAy7lBalD4iMtoZRLpPw6omxEUa91oiFAnuLrCLQeAMMii5z0TxN1t2QvGWXTitMsgM_o5vZSHAHaWeYFcVCgFavJg_Yc9uYp1rgSiV1m07QrE5UwCRY7H1_26eZc07KkRRRx_hWpdGH4txN43LTz0Oeg4keIdEQgXVjmNe2dpzovd3qPTxKkQhOLaJpvebt8VyReeA9NeeZ2Kt9SeD0UgDY5Eu8zWkBv6iV3dbJ_ZEFoKYB5-AWlIBSdxbQh8EblFqqSRZdXZYkjBikab3a14TZcSfYEekbs7XglQ2186aWoMxbCYVb6Ymyz_tc1XseKBAyqfTO11u-g6wuuoGEZ8t31kTZHZMhIHzORwBZDqiwQpc_g75g31wvfcJe7-N7WTUaA.Ku5yrf03P2D4pDiYOzkfUw expires_in:3600]}"
+grafana_1   | t=2019-05-08T01:33:41+0000 lvl=dbug msg="Received id_token" logger=oauth.generic_oauth json="{\"at_hash\":\"NXjtyy2xhkdF6FodmGxxQg\",\"sub\":\"52f52daa-e3fd-4374-9e3f-450ad0ac0811\",\"aud\":\"6ns2hh8ltisc7h7p3aev0t9flu\",\"email_verified\":true,\"token_use\":\"id\",\"auth_time\":1557279221,\"iss\":\"https:\\/\\/cognito-idp.us-east-1.amazonaws.com\\/us-east-1_aIAoIYrAN\",\"cognito:username\":\"bret.waldow\",\"exp\":1557282821,\"iat\":1557279221,\"email\":\"bret.waldow@mechanicalrock.io\"}" data="&{Name: DisplayName: Login: Username: Email:bret.waldow@mechanicalrock.io Upn: Attributes:map[]}"
+grafana_1   | t=2019-05-08T01:33:41+0000 lvl=dbug msg="OAuthLogin got user info" logger=oauth userInfo="&{Id: Name: Email:bret.waldow@mechanicalrock.io Login:bret.waldow@mechanicalrock.io Company: Role:}"
+grafana_1   | t=2019-05-08T01:33:41+0000 lvl=dbug msg="user auth token created" logger=auth tokenId=1 userId=2 clientIP=125.209.133.123 userAgent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0" authToken=1881482f2e73933ec4e4482c08a0a0f9b143a594a0d3f289284b51814b290910
+grafana_1   | t=2019-05-08T01:33:41+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/login/generic_oauth status=302 remote_addr=125.209.133.123 time_ms=994 size=32 referer=https://grafana.mrsandbox.rocks/login
+grafana_1   | t=2019-05-08T01:33:41+0000 lvl=dbug msg="seen token" logger=auth tokenId=1 userId=2 clientIP=125.209.133.123 userAgent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0" authToken=1881482f2e73933ec4e4482c08a0a0f9b143a594a0d3f289284b51814b290910
+grafana_1   | t=2019-05-08T01:33:41+0000 lvl=dbug msg="Updating last user_seen_at" logger=context userId=2 orgId=1 uname=bret.waldow@mechanicalrock.io user_id=2
+grafana_1   | t=2019-05-08T01:33:42+0000 lvl=dbug msg="avatar.fetch(fetch new avatar): http://secure.gravatar.com/avatar/6c619005a1e58edc6232c5b4f9d9be88?d=retro&r=pg&size=200"
+grafana_1   | t=2019-05-08T01:33:44+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
+grafana_1   | t=2019-05-08T01:33:48+0000 lvl=info msg="Request Completed" logger=context userId=2 orgId=1 uname=bret.waldow@mechanicalrock.io method=GET path=/{{team.avatarUrl}} status=404 remote_addr=125.209.133.123 time_ms=1 size=22856 referer=https://grafana.mrsandbox.rocks/profile
+grafana_1   | t=2019-05-08T01:33:50+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.3.195 time_ms=0 size=29 referer=
+
+
+
+bret.waldow+grafana@mechanicalrock.io:
+grafana_1   | t=2019-05-08T01:47:36+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.46.227 time_ms=0 size=29 referer=
+grafana_1   | t=2019-05-08T01:47:36+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/login/generic_oauth status=302 remote_addr=125.209.133.123 time_ms=0 size=357 referer=https://grafana.mrsandbox.rocks/login
+grafana_1   | t=2019-05-08T01:47:40+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.16.89 time_ms=0 size=29 referer=
+grafana_1   | t=2019-05-08T01:47:41+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.7.34 time_ms=0 size=29 referer=
+grafana_1   | t=2019-05-08T01:47:44+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
+grafana_1   | t=2019-05-08T01:47:50+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.3.195 time_ms=0 size=29 referer=
+grafana_1   | t=2019-05-08T01:47:54+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
+grafana_1   | t=2019-05-08T01:47:58+0000 lvl=info msg="state check" logger=oauth queryState=7fa85034040599b6185c1cee4d41fd6cd8cafddf0c59eabb7942a3e24fd42f7f cookieState=7fa85034040599b6185c1cee4d41fd6cd8cafddf0c59eabb7942a3e24fd42f7f
+grafana_1   | t=2019-05-08T01:47:59+0000 lvl=dbug msg="OAuthLogin Got token" logger=oauth token="&{AccessToken:eyJraWQiOiJlVHlBREYxZXBuRzRGSG5OY09ncGw1ZmM0alN4b29DOTdydnhUTHVzaFJzPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJjOWY5NTg2OC1kMjQzLTQzNWQtOWI1Ni0wZDNlNDgwNmRhMDYiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiYXV0aF90aW1lIjoxNTU3MjgwMDc5LCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9hSUFvSVlyQU4iLCJleHAiOjE1NTcyODM2NzksImlhdCI6MTU1NzI4MDA3OSwidmVyc2lvbiI6MiwianRpIjoiNjgyYjZmOTctZTE1Ni00NzI2LTg3MDQtZThhZWU2MWVlNDhhIiwiY2xpZW50X2lkIjoiNm5zMmhoOGx0aXNjN2g3cDNhZXYwdDlmbHUiLCJ1c2VybmFtZSI6ImJyZXQuZ3JhZmFuYSJ9.kruDlMAUyALjZizVpfJ_DGSTs8hRJCy4mIe7d2aRVzQXyKU44vzhhVJaMh4xK0myZeKuZGw4R4FDN2kOenf6eyu0B1hTk8h5ppaJQctwGRpyu9OxAiZOaZR2zCn_WV4IqqCcks6oggi1QmuENRg6q8LU9tZm2M2P5l__jjt4KUZViXzf
+
+grafana_1   | t=2019-05-08T01:48:04+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
+grafana_1   | t=2019-05-08T01:48:06+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.46.227 time_ms=0 size=29 referer=
+grafana_1   | t=2019-05-08T01:48:08+0000 lvl=info msg="Request Completed" logger=context userId=3 orgId=1 uname=bret.waldow+grafana@mechanicalrock.io method=GET path=/{{team.avatarUrl}} status=404 remote_addr=125.209.133.123 time_ms=1 size=22888 referer=https://grafana.mrsandbox.rocks/profile
+grafana_1   | t=2019-05-08T01:48:10+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.16.89 time_ms=0 size=29 referer=
+grafana_1   | t=2019-05-08T01:48:11+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.7.34 time_ms=0 size=29 referer=
+grafana_1   | t=2019-05-08T01:48:14+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
+grafana_1   | t=2019-05-08T01:48:20+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=172.31.3.195 time_ms=0 size=29 referer=
+grafana_1   | t=2019-05-08T01:48:24+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
+grafana_1   | t=2019-05-08T01:48:34+0000 lvl=info msg="Request Completed" logger=context userId=3 orgId=1 uname=bret.waldow+grafana@mechanicalrock.io method=GET path=/{{team.avatarUrl}} status=404 remote_addr=125.209.133.123 time_ms=1 size=22889 referer=https://grafana.mrsandbox.rocks/profile
+grafana_1   | t=2019-05-08T01:48:34+0000 lvl=dbug msg="Scheduling update" logger=alerting.scheduler ruleCount=0
+
+Working apart from first Oauth account creation leads to 'missing state' error.  Cleared up by logging in from home page.  Subsequent account creation does not repeat the problen:
+[ec2-user@ip-172-31-1-185 collectd-influxdb-grafana-docker]$ diff grafana.ini grafana.ini.602.base 
+41c41
+< domain = grafana.mrsandbox.rocks
+---
+> ;domain = localhost
+49c49
+< root_url = https://grafana.mrsandbox.rocks
+---
+> ;root_url = http://localhost:3000
+122c122
+< cookie_secure = true
+---
+> ;cookie_secure = false
+178c178
+< cookie_secure = true
+---
+> ;cookie_secure = false
+246,248c246
+< ;signout_redirect_url = https://grafana.mrsandbox.rocks
+< ;signout_redirect_url = https://2dukj7r3blo4dgimhqclb5f6qo.auth.ap-southeast-2.amazoncognito.com/logout?client_id=2dukj7r3blo4dgimhqclb5f6qo&redirect_uri=https://grafana.mrsandbox.rocks&response_type=code&scope=openid+profile+email
+< signout_redirect_url = https://7c6o4qvi6097s75uudgh28l6p3.auth.ap-southeast-2.amazoncognito.com/logout?client_id=7c6o4qvi6097s75uudgh28l6p3&logout_uri=https://grafana.mrsandbox.rocks&redirect_uri=https://grafana.mrsandbox.rocks&response_type=code&scope=openid+profile+email
+---
+> ;signout_redirect_url =
+292,296c290,294
+< enabled = true
+< name = OAuth
+< allow_sign_up = true
+< client_id = 7c6o4qvi6097s75uudgh28l6p3
+< client_secret = 1bf3l5hv7mkl432f7e37rajgc67u73p6a6k1m2pjmsvma7jlr6bv
+---
+> ;enabled = false
+> ;name = OAuth
+> ;allow_sign_up = true
+> ;client_id = some_id
+> ;client_secret = some_secret
+298,301c296,298
+< scopes = openid profile email
+< auth_url = https://7c6o4qvi6097s75uudgh28l6p3.auth.ap-southeast-2.amazoncognito.com/oauth2/authorize
+< token_url = https://7c6o4qvi6097s75uudgh28l6p3.auth.ap-southeast-2.amazoncognito.com/oauth2/token
+< api_url = https://7c6o4qvi6097s75uudgh28l6p3.auth.ap-southeast-2.amazoncognito.com/oauth2/userInfo
+---
+> ;auth_url = https://foo.bar/login/oauth/authorize
+> ;token_url = https://foo.bar/login/oauth/access_token
+> ;api_url = https://foo.bar/user
+334c331
+< enabled = false
+---
+> ;enabled = true
+367c364
+< level = debug
+---
+> ;level = info
