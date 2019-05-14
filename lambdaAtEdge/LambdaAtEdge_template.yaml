@@ -72,7 +72,7 @@ Resources:
           - ViewerRequestLambdaRole
           - Arn
       AutoPublishAlias: live
-      Timeout: 30
+      Timeout: 5
   CFWebDistribution:
     Type: 'AWS::CloudFront::Distribution'
     Properties:
