@@ -4,14 +4,12 @@ ARTIFACT_BUCKET="mr-artefacts"
 S3_IMAGE_BUCKET="mr-cognito-images"
 STACK_NAME="grafana-CF-LambdaAtEdge2"
 
-# This template must be deployed in us-east-1 because CloudFront can
-# only reference lambdas in us-east-1.
+# CloudFront can only reference lambdas in us-east-1.
 # Artifact bucket should be in us-east-1.
 # The image bucket does not need to be in us-east-1 though.
 AWS_REGION="us-east-1"
 PROFILE="sandboxDevOps"
 
-# sam is an alias for 'aws cloudformation'
 # The idea here is that the code referenced in the template will be uploaded
 # to the artifact bucket as a zip file. Then another template is written out
 # with the correct reference to the artifact bucket
