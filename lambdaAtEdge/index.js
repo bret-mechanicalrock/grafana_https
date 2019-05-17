@@ -20,14 +20,24 @@ const getUserPoolId = async () => {
 const userPoolIdPromise = getUserPoolId()
 
 const jwks = async (userPoolId) => {
-    const res = await got(`https://cognito-idp.ap-southeast-2.amazonaws.com/${userPoolId}/.well-known/jwks.json`);
-    const keys = JSON.parse(res).keys;
-    for(var i = 0; i < keys.length; i++) {
+    console.log('I saw something!')
+    console.log('userPoolId is: ' + userPoolId)
+
+    const requestString = 'https://cognito-idp.ap-southeast-2.amazonaws.com/' + userPoolId + '/.well-known/jwks.json'
+    console.log('requestString is: ' + requestString)
+
+    const res = await got(requestString);
+    console.log(JSON.stringify(res.body))
+    console.log('res is: ' + res)
+
+    const pems = {}
+    const keyArray = JSON.parse(res.body).keys;
+    for(var i = 0; i < keyArray.length; i++) {
         //Convert each key to PEM
-        var key_id = keys[i].kid;
-        var modulus = keys[i].n;
-        var exponent = keys[i].e;
-        var key_type = keys[i].kty;
+        var key_id = keyArray[i].kid;
+        var modulus = keyArray[i].n;
+        var exponent = keyArray[i].e;
+        var key_type = keyArray[i].kty;
         var jwk = { kty: key_type, n: modulus, e: exponent};
         var pem = jwkToPem(jwk);
         pems[key_id] = pem;
@@ -49,7 +59,6 @@ exports.handler = async (event) => {
     const cfrequest = event.Records[0].cf.request;
     const headers = cfrequest.headers;
     console.log('USERPOOLID=' + userPoolId);
-    console.log('region=' + region);
     console.log('pems=' + pems);
 
     //Fail if no authorization header found
