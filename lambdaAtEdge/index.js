@@ -22,10 +22,8 @@ const userPoolIdPromise = getUserPoolId()
 const jwks = async (userPoolId) => {
     console.log('I saw something!')
     console.log('userPoolId is: ' + userPoolId)
-
     const requestString = 'https://cognito-idp.ap-southeast-2.amazonaws.com/' + userPoolId + '/.well-known/jwks.json'
     console.log('requestString is: ' + requestString)
-
     const res = await got(requestString);
     console.log(JSON.stringify(res.body))
     console.log('res is: ' + res)
@@ -107,5 +105,6 @@ exports.handler = async (event) => {
     }
 
     delete cfrequest.headers.authorization;
+    console.log('retrning cfrequest: ' + JSON.stringify(cfrequest))
     return cfrequest
 };
