@@ -1,8 +1,9 @@
 #! /bin/bash
+# Deploy the LambdaAtEdge_template to create a CloudFront distribution with a Lambda to gate requests according to Cognito status
 
 ARTIFACT_BUCKET="mr-artefacts"
 S3_IMAGE_BUCKET="mr-cognito-images"
-STACK_NAME="grafana-CF-LambdaAtEdge2"
+STACK_NAME="grafana-CF-LambdaAtEdge"
 
 # CloudFront can only reference lambdas in us-east-1.
 # Artifact bucket should be in us-east-1.
