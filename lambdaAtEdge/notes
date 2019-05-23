@@ -21,7 +21,18 @@ SSM Parameter store
 Install sequence
 grafana_https stack in Sydney - provides HTTPS redirect to existing Grafana instance with existing Domain name and AWS cert.
 Cognito_template stack in ap-southeast-2 (Sydney) - provides Cognito User Pool ID and Client ID.
-Run deploy.sh after editing to set values desired.
+Edit the grafana.ini file with the outputs from the Cognito template, changing all occurrences of the Client ID and Client Secret
+Use the Oauth button on the Grafana log in page to access the Cognito log in screen.  Use the link on this screen to create users in Cognito.
+Edit the deploy.sh file to set values desired, then run the script to install the CloudFront/Lambda/S3 software.  The Cognito User pool ID was stored in an AWS SSM variable for this next template to use.
+The Lambda gateway function is in the index.js file.
+The output of the CloudFormation template deployed includes the root domain of the CloudFront distribution:
+e.g. cloudFrontDomainName 	d19jl3e4pb3ydy.cloudfront.net
+
+This domain is used to request files from the S3 bucket:
+https://d19jl3e4pb3ydy.cloudfront.net/c4371fce-7dd2-4afe-b3ba-e60827331dc9/ap-southeast-2%3A9c62924c-412e-4ebd-8504-dbac1007dca8/2019/3/5/Dilbert_climate-change-will-get-it-done.gif
+
+The request will succeed or fail according to the Lambda@Edge gateway function deployed with the solution (in index.js).  Currently, the only check implemented is that the JWT token included with the request be valid currently for a Cognito user.
+
 
 
 Make changes to grafana.ini file using information from the above set ups:
@@ -130,3 +141,6 @@ Working apart from first Oauth account creation leads to 'missing state' error. 
 < level = debug
 ---
 > ;level = info
+
+
+https://7c6o4qvi6097s75uudgh28l6p3.auth.ap-southeast-2.amazoncognito.com/oauth2/token, 
