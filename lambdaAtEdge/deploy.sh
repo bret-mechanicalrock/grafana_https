@@ -3,11 +3,11 @@
 
 ARTIFACT_BUCKET="mr-artefacts"
 S3_IMAGE_BUCKET="mr-cognito-images"
-STACK_NAME="grafana-CF-LambdaAtEdge"
+STACK_NAME="grafana-POC-LambdaAtEdge"
 
 # CloudFront can only reference lambdas in us-east-1.
 # Artifact bucket should be in us-east-1.
-# The image bucket does not need to be in us-east-1 though.
+# The image bucket does not need to be in us-east-1, though.
 AWS_REGION="us-east-1"
 PROFILE="sandboxDevOps"
 
