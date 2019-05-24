@@ -4,9 +4,11 @@ const jwt = require('jsonwebtoken');
 const jwkToPem = require('jwk-to-pem');
 const got = require('got')
 
+const AWS_Region = 'ap-southeast-2'
+
 const getUserPoolId = async () => {
     try {
-        const response = await new AWS.SSM({region: 'ap-southeast-2'}).getParameter({ 
+        const response = await new AWS.SSM({region: AWS_Region}).getParameter({ 
             Name: '/cognito/userPoolId',
         }).promise();
         if (!response.Parameter || !response.Parameter.Value) {
@@ -22,7 +24,7 @@ const userPoolIdPromise = getUserPoolId()
 const jwks = async (userPoolId) => {
     console.log('I saw something!')
     console.log('userPoolId is: ' + userPoolId)
-    const requestString = 'https://cognito-idp.ap-southeast-2.amazonaws.com/' + userPoolId + '/.well-known/jwks.json'
+    const requestString = 'https://cognito-idp.' + AWS_Region + '.amazonaws.com/' + userPoolId + '/.well-known/jwks.json'
     console.log('requestString is: ' + requestString)
     const res = await got(requestString);
     console.log(JSON.stringify(res.body))
@@ -52,7 +54,7 @@ const response401 = {
 exports.handler = async (event) => {
     const userPoolId = await userPoolIdPromise;
     const pems = await pemsPromise;
-    const iss = `https://cognito-idp.ap-southeast-2.amazonaws.com/${userPoolId}`
+    const iss = `https://cognito-idp.${AWS_Region}.amazonaws.com/${userPoolId}`
 
     const cfrequest = event.Records[0].cf.request;
     const headers = cfrequest.headers;
@@ -71,6 +73,7 @@ exports.handler = async (event) => {
 
     //Fail if the token is not jwt
     var decodedJwt = jwt.decode(jwtToken, {complete: true});
+    console.log('decoded Jwt: ' + JSON.stringify(decodedJwt))
     if (!decodedJwt) {
         console.log("Not a valid JWT token");
         return response401;
