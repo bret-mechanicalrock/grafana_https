@@ -8,7 +8,7 @@ const AWS_Region = 'ap-southeast-2'
 
 const getUserPoolId = async () => {
     try {
-        const response = await new AWS.SSM({region: AWS_Region}).getParameter({ 
+        const response = await new AWS.SSM({region: 'ap-southeast-2'}).getParameter({ 
             Name: '/cognito/userPoolId',
         }).promise();
         if (!response.Parameter || !response.Parameter.Value) {
@@ -74,6 +74,19 @@ exports.handler = async (event) => {
     //Fail if the token is not jwt
     var decodedJwt = jwt.decode(jwtToken, {complete: true});
     console.log('decoded Jwt: ' + JSON.stringify(decodedJwt))
+    const validGroups = JSON.stringify(decodedJwt.payload['cognito:groups'])
+    const requestedGroup = JSON.stringify(cfrequest.uri).split('/')[1]
+    console.log('decoded payload of groups: ' + validGroups)
+    console.log('cfrequest URI: ' + requestedGroup)
+
+    // Fail if the request isn't in this user's valid groups
+    if (validGroups.indexOf(requestedGroup) !== -1) {
+        console.log('Matched group ' + requestedGroup)
+    } else {
+        console.log('group ' + requestedGroup + ' is not in ' + validGroups)
+        return response401;
+    }
+    
     if (!decodedJwt) {
         console.log("Not a valid JWT token");
         return response401;
