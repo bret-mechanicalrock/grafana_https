@@ -32,6 +32,8 @@ This domain is used to request files from the S3 bucket:
 https://d19jl3e4pb3ydy.cloudfront.net/c4371fce-7dd2-4afe-b3ba-e60827331dc9/ap-southeast-2%3A9c62924c-412e-4ebd-8504-dbac1007dca8/2019/3/5/Dilbert_climate-change-will-get-it-done.gif
 
 The request will succeed or fail according to the Lambda@Edge gateway function deployed with the solution (in index.js).  Currently, the only check implemented is that the JWT token included with the request be valid currently for a Cognito user.
+The Cognito_template cloudformation template includes 'implicit' grants from Cognito.  You may wish to explore only allowing Authorization Code grants exchanged only by the plugin running on the back end server:
+   AllowedOAuthFlows=['code','implicit']
 
 
 
@@ -144,3 +146,25 @@ Working apart from first Oauth account creation leads to 'missing state' error. 
 
 
 https://7c6o4qvi6097s75uudgh28l6p3.auth.ap-southeast-2.amazoncognito.com/oauth2/token, 
+
+
+GET https://mydomain.auth.us-east-1.amazoncognito.com/oauth2/authorize?
+response_type=code&
+client_id=ad398u21ijw3s9w3939&
+redirect_uri=https://YOUR_APP/redirect_uri&
+state=STATE&
+scope=openid+profile+aws.cognito.signin.user.admin
+
+https://3q726q23skjvca8v5gggho1qgt.auth.ap-southeast-2.amazoncognito.com/oauth2/authorize?response_type=code&client_id=3q726q23skjvca8v5gggho1qgt&redirect_uri=https://d19jl3e4pb3ydy.cloudfront.net/c4371fce-7dd2-4afe-b3ba-e60827331dc9/ap-southeast-2%3A9c62924c-412e-4ebd-8504-dbac1007dca8/2019/3/5/Dilbert_climate-change-will-get-it-done.gif&state=999&scope=openid+profile
+
+https://lobster1234.github.io/2018/05/31/server-to-server-auth-with-amazon-cognito/
+
+
+s3 is bucketname/yyyy/mm/dd
+filenames are measurement-unixtime.jpg
+typically they are circa every 5 minutes
+
+
+bcw1000@penguin:~$ wget --header='Authorization: ' https://d19jl3e4pb3ydy.cloudfront.net/test2group/2019/5/24/I_found_a_picture_of_your_grandpa.jpg--2019-05-27 10:40:16--  https://d19jl3e4pb3ydy.cloudfront.net/test2group/2019/5/24/I_found_a_picture_of_your_grandpa.jpg
+
+bcw1000@penguin:~$ wget --header='Authorization: ' https://d19jl3e4pb3ydy.cloudfront.net/test3group/2019/5/24/javascript_for_kids.jpg
