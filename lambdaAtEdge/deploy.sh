@@ -3,7 +3,7 @@
 
 ARTIFACT_BUCKET="mr-artefacts"
 S3_IMAGE_BUCKET="mr-cognito-images"
-STACK_NAME="grafana-POC-LambdaAtEdge"
+STACK_NAME="grafana-POC2-LambdaAtEdge"
 
 # CloudFront can only reference lambdas in us-east-1.
 # Artifact bucket should be in us-east-1.
@@ -19,7 +19,7 @@ aws --region ${AWS_REGION} --profile ${PROFILE} cloudformation package \
 	--s3-bucket ${ARTIFACT_BUCKET} \
 	--output-template-file packaged.yaml
 
-# This will deployed the 'packaged template' which correctly references the code
+# This will deploy the 'packaged template' which correctly references the code
 # The identity that is acting as the 'deployer' must have access to the artifact
 # bucket in order to deploy the lambda function code in the template.
 aws --region ${AWS_REGION} --profile ${PROFILE} cloudformation deploy \
