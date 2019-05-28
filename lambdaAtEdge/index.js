@@ -8,7 +8,7 @@ const AWS_Region = 'ap-southeast-2'
 
 const getUserPoolId = async () => {
     try {
-        const response = await new AWS.SSM({region: 'ap-southeast-2'}).getParameter({ 
+        const response = await new AWS.SSM({region: AWS_Region}).getParameter({ 
             Name: '/cognito/userPoolId',
         }).promise();
         if (!response.Parameter || !response.Parameter.Value) {
@@ -22,13 +22,11 @@ const getUserPoolId = async () => {
 const userPoolIdPromise = getUserPoolId()
 
 const jwks = async (userPoolId) => {
-    console.log('I saw something!')
     console.log('userPoolId is: ' + userPoolId)
     const requestString = 'https://cognito-idp.' + AWS_Region + '.amazonaws.com/' + userPoolId + '/.well-known/jwks.json'
     console.log('requestString is: ' + requestString)
     const res = await got(requestString);
     console.log(JSON.stringify(res.body))
-    console.log('res is: ' + res)
 
     const pems = {}
     const keyArray = JSON.parse(res.body).keys;
@@ -59,7 +57,6 @@ exports.handler = async (event) => {
     const cfrequest = event.Records[0].cf.request;
     const headers = cfrequest.headers;
     console.log('USERPOOLID=' + userPoolId);
-    console.log('pems=' + pems);
 
     //Fail if no authorization header found
     if(!headers.authorization) {
