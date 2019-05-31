@@ -169,3 +169,25 @@ typically they are circa every 5 minutes
 wget --header='Authorization: Bearer ' https://d21lkkuybunt0i.cloudfront.net/test3group/2019/5/24/javascript_for_kids.jpg
 wget --header='Authorization: Bearer ' https://d21lkkuybunt0i.cloudfront.net/test2group/2019/5/24/I_found_a_picture_of_your_grandpa.jpg
 MUST log out and in to catch user pool changes!
+
+http://mr-static-host.s3-website-ap-southeast-2.amazonaws.com
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicReadForGetBucketObjects",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::mr-static-host/*"
+            ]
+        }
+    ]
+}
+
+// acquire JWT:
+https://1d5s30t66sr35i569862681p5p.auth.ap-southeast-2.amazoncognito.com/login?client_id=2gukln7ue8msn3flij2713r2oq&response_type=token&redirect_uri=https://dx2wb59dqijk1.cloudfront.net/index.html
+https://<cognito user pool domain>.auth.ap-southeast-2.amazoncognito.com/login?client_id=<cognito user pool application ID>&response_type=token&redirect_uri=<redirect URL registered with cognito>
