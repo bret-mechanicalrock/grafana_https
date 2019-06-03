@@ -265,8 +265,7 @@ COGNITO_USER="bret.2" COGNITO_PASS="Password_1" node ./index.js
    on the Cognito log in page for creating new users.
 
 5) Select an S3 bucket with images you wish to use, and note that in the provided example system, the top-level FOLDER name
-   in the bucket will correspond to a 'vessel'.  Populate this bucket with images for testing according to the template
-   you specified:
+   in the bucket will correspond to a 'vessel'.  Populate this bucket with images for testing according to the template:
    foldername/yyyy/mm/dd/filename.jpg
 
 6) Edit the users in the Cognito User Pool you created above, and create Groups and assign users to the groups for testing.
@@ -279,21 +278,22 @@ COGNITO_USER="bret.2" COGNITO_PASS="Password_1" node ./index.js
 
    To acquire an image from the S3 bucket, make a request to the CloudFront web distribution and include a JWT token
    acauired from Cognito as a header.  Here is an example from the command line:
-   $ wget --header='Authorization: Bearer <JWT token text here>' https://d21lkkuybunt0i.cloudfront.net/test3group/2019/5/24/image_file.jpg
+   $ wget --header='Authorization: Bearer <JWT token text here>' https://d21lkkuybunt0i.cloudfront.net/vessel_1/2019/5/24/image_file.jpg
 
-   Note the word 'Bearer' - it is required.  The text 'test3group' is a top-level folder in a path in the S3 bucket, and it
+   Note the word 'Bearer' - it is required.  The path 'vessel_1' is a top-level folder in a path in the S3 bucket, and it
    also corresponds to a group in the Cognito User Pool - and it analogous to a vessel designation in your application.
 
    The Lambda code provided implements this scheme, and you may choose another and modify the code to fit your preference.
 
 8) The above mentions you must include a JWT token provided by your Cognito User Pool to acquire an image.  I have noted
-   that on log in via Cognito, the several tokens associated with a user are printed to the Grafana log file:
-     an id_token, a refresh_token, and an access_token.  The access_token is the JWT token needed.
+   that, on log in via Cognito, the several tokens associated with a user are printed to the Grafana log file:
+     - an id_token, a refresh_token, and an access_token.
+    The access_token is the JWT token needed.
     
    This is an inconvenient way to acquire the JWT token, but it shows that Grafana is being provided the tokens, and thus
    there is likely to be a way to manage them through Grafana.  I have not investigated this.
 
-   However, in addition to the listing in the Grafana log file, we are also providing a small application which can be
+   However, in addition to the listing in the Grafana log file, we are also providing an application which can be
    configured with the details of your installation to acquire JWT tokens for each user during your own development work.
    In addition, this application provides a code example of requesting the JWT token from Cognito.
 
@@ -303,7 +303,7 @@ COGNITO_USER="bret.2" COGNITO_PASS="Password_1" node ./index.js
    $ git clone  https://github.com/MechanicalRock/cognito-jwt-token-cli
    This project has a README file.  The basics are to edit the index.js file to match your installation, and build it.
 
-   This provide a usage example.  On success, the output will be the JWT token for the user named:
+   This is a usage example.  On success, the output will be the JWT token for the user named:
    $ COGNITO_USER="user.2" COGNITO_PASS="Password_1" node ./index.js
      eyJraWQiOiJRa3U1Z1BRcmZoeTdOTE5SZXkwSkdjWUYrSnFsQ3d6cWMyeGFEdno0QUtzPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJjNjNjMjcyNS02O
      GIzLTQ5NTAtYjUzYy00YWFiNTM4NjBmMTYiLCJhdWQiOiIyZ3VrbG43dWU4bXNuM2ZsaWoyNzEzcjJvcSIsImNvZ25pdG86Z3JvdXBzIjpbInRlc3QyZ3
