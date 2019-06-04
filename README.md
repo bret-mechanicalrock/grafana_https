@@ -13,7 +13,7 @@ AWS Cloudformation to create an HTTPS path for Grafana
    This diff against a base grafana.ini file shows the entries I changed to provide Cognito log in on my system.
    Of course, you must substitute your values:
 
-<code>$ diff grafana.ini grafana.ini.602.base 
+<quote>$ diff grafana.ini grafana.ini.602.base 
 41c41
 < domain = grafana.mrsandbox.rocks
 ---
@@ -63,7 +63,7 @@ AWS Cloudformation to create an HTTPS path for Grafana
 < level = debug
 ---
 > ;level = info
-</code>
+</quote>
 
 4) Verify the Cognito log in via Grafana.  Use the button that should display on the Grafana home page and note the link
    on the Cognito log in page for creating new users.
