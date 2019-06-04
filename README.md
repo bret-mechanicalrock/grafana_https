@@ -13,7 +13,8 @@ AWS Cloudformation to create an HTTPS path for Grafana
    This diff against a base grafana.ini file shows the entries I changed to provide Cognito log in on my system.
    Of course, you must substitute your values:
 
-<quote>$ diff grafana.ini grafana.ini.602.base 
+```
+$ diff grafana.ini grafana.ini.602.base 
 41c41
 < domain = grafana.mrsandbox.rocks
 ---
@@ -63,7 +64,7 @@ AWS Cloudformation to create an HTTPS path for Grafana
 < level = debug
 ---
 > ;level = info
-</quote>
+```
 
 4) Verify the Cognito log in via Grafana.  Use the button that should display on the Grafana home page and note the link
    on the Cognito log in page for creating new users.
@@ -83,7 +84,9 @@ AWS Cloudformation to create an HTTPS path for Grafana
    To acquire an image from the S3 bucket, make a request to the CloudFront web distribution and include a JWT token
    acauired from Cognito as a header.  Here is an example from the command line:
    
-<code>$ wget --header='Authorization: Bearer <JWT token text here>' https://d21lkkuybunt0i.cloudfront.net/vessel_1/2019/5/24/image_file.jpg</code>
+```
+$ wget --header='Authorization: Bearer <JWT token text here>' https://d21lkkuybunt0i.cloudfront.net/vessel_1/2019/5/24/image_file.jpg
+```
 
    Note the word 'Bearer' - it is required.  The path 'vessel_1' is a top-level folder in a path in the S3 bucket, and it
    also corresponds to a group in the Cognito User Pool - and it analogous to a vessel designation in your application.
@@ -106,13 +109,14 @@ AWS Cloudformation to create an HTTPS path for Grafana
 
    To produce JWT tokens for development use, and also containing an example of the code:
 
-<code>$ git clone  https://github.com/MechanicalRock/cognito-jwt-token-cli</code>
+`$ git clone  https://github.com/MechanicalRock/cognito-jwt-token-cli`
 
    This project has a README file.  The basics are to edit the index.js file to match your installation, and build it.
 
    This is a usage example.  On success, the output will be the JWT token for the user named:
    
-<code>$ COGNITO_USER="user.2" COGNITO_PASS="Password_1" node ./index.js
+```
+$ COGNITO_USER="user.2" COGNITO_PASS="Password_1" node ./index.js
      eyJraWQiOiJRa3U1Z1BRcmZoeTdOTE5SZXkwSkdjWUYrSnFsQ3d6cWMyeGFEdno0QUtzPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJjNjNjMjcyNS02O
      GIzLTQ5NTAtYjUzYy00YWFiNTM4NjBmMTYiLCJhdWQiOiIyZ3VrbG43dWU4bXNuM2ZsaWoyNzEzcjJvcSIsImNvZ25pdG86Z3JvdXBzIjpbInRlc3QyZ3
      JvdXAiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsImV2ZW50X2lkIjoiYTdlMDUzODMtODM2Ni0xMWU5LTg1ODAtZjM2YjViNDhiZWU5IiwidG9rZW5fdXNl
@@ -121,9 +125,12 @@ AWS Cloudformation to create an HTTPS path for Grafana
      ImVtYWlsIjoiYnJldC53YWxkb3crMkBtZWNoYW5pY2Fscm9jay5pbyJ9.T14gMpQ9As7ncht3KqAuHWZPNgoHHzRFz-I8A4tFsaujMa3dCc6erWsQHxk30
      KrnZLg6ZAvzyQaDtWk1VpPQ40nfvhoJfdqk-VFl0kaQ2hIRavRsUh-F4PIYOUN4X0HcWxxLTcfdAXzJTZElxSUkUlkOGpVFdMJyFa6SHrm3gZz8RaxXtp7
      y0SoI9X5Bnw7nULiOi6hun5Dm03GkROz5xQwFMY7Im3ly0d-W1Eoxrgqrxh2enoWf01utDu0vqC9Zxg93pw7YvUUGT6dj7VLUhr94-sNXkM6ku8T8-vGjT
-     u0vC3oJIPXXH5CW9Xx4olnMyItWkDuV6-ieg9siAUl-gg</code>
+     u0vC3oJIPXXH5CW9Xx4olnMyItWkDuV6-ieg9siAUl-gg
+```
 
 AWS provides an example of a CloudFront/Lambda@Edge/S3 web distribution which may provide further insight into the workings
 of the system:
  
-<code>https://aws.amazon.com/blogs/networking-and-content-delivery/authorizationedge-how-to-use-lambdaedge-and-json-web-tokens-to-enhance-web-application-security/</code>
+```
+https://aws.amazon.com/blogs/networking-and-content-delivery/authorizationedge-how-to-use-lambdaedge-and-json-web-tokens-to-enhance-web-application-security/
+```
