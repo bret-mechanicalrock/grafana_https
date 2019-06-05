@@ -2,14 +2,14 @@
 AWS Cloudformation to create an HTTPS path for Grafana
 
 1) Provide an install of Grafana accessible at an HTTPS URL.
-   Cognito requires HTTPS.  If you do not currently have this, use the 'grafana_https.yml' CloudFormation template
+   Cognito requires HTTPS.  If you do not currently have this, use the `grafana_https.yml` CloudFormation template
    to create this in AWS, but you must provide a domain you already own and either have a Certificate in AWS
    or create or import one.
 
-2) Create the Cognito User Pool with the 'Cognito_template.yml' CloudFormation template, supplying the parameters
+2) Create the Cognito User Pool with the `Cognito_template.yml` CloudFormation template, supplying the parameters
    listed at the beginning, and using your values (such as the Grafana HTTPS URL).
 
-3) Using values from the output of the CloudFormation template, modify the grafana.ini file to configure Oauth2 logins.
+3) Using values from the output of the CloudFormation template, modify the `grafana.ini` file to configure Oauth2 logins.
    This diff against a base grafana.ini file shows the entries I changed to provide Cognito log in on my system.
    Of course, you must substitute your values:
 
@@ -71,7 +71,7 @@ $ diff grafana.ini grafana.ini.602.base
 
 5) Select an S3 bucket with images you wish to use, and note that in the provided example system, the top-level FOLDER name
    in the bucket will correspond to a 'vessel'.  Populate this bucket with images for testing according to the template:
-   foldername/yyyy/mm/dd/filename.jpg
+   `foldername/yyyy/mm/dd/filename.jpg`
 
 6) Edit the users in the Cognito User Pool you created above, and create Groups and assign users to the groups for testing.
    The group names correspond to the foldernames used for vessels in the S3 bucket.  If a user is assigned to a group,
@@ -88,7 +88,7 @@ $ diff grafana.ini grafana.ini.602.base
 $ wget --header='Authorization: Bearer <JWT token text here>' https://d21lkkuybunt0i.cloudfront.net/vessel_1/2019/5/24/image_file.jpg
 ```
 
-   Note the word 'Bearer' - it is required.  The path 'vessel_1' is a top-level folder in a path in the S3 bucket, and it
+   Note the word `Bearer` - it is required.  The path `vessel_1` is a top-level folder in a path in the S3 bucket, and it
    also corresponds to a group in the Cognito User Pool - and it analogous to a vessel designation in your application.
 
    The Lambda code provided implements this scheme, and you may choose another and modify the code to fit your preference.
