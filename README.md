@@ -1,16 +1,18 @@
 # grafana_https
-## AWS Cloudformation templates and supporting scripts to
+## AWS Cloudformation templates and supporting scripts to:
 ### Create an HTTPS path for Grafana
 
 1) Provide an install of Grafana accessible at an HTTPS URL.
    Cognito requires HTTPS.  If you do not currently have this, use the `grafana_https.yml` CloudFormation template
    to create this in AWS, but you must provide a domain you already own and either have a Certificate in AWS
    or create or import one.
+   This template may be deployed in any AWS Region.
 
 ### Provide a Cognito login for Grafana
 
 2) Create the Cognito User Pool with the `Cognito_template.yml` CloudFormation template, supplying the parameters
    listed at the beginning, and using your values (such as the Grafana HTTPS URL).
+   This template may be deployed in any AWS Region.
 
 3) Using values from the output of the CloudFormation template, modify the `grafana.ini` file to configure Oauth2 logins.
    This diff against a base grafana.ini file shows the entries I changed to provide Cognito log in on my system.
@@ -87,6 +89,7 @@ $ diff grafana.ini grafana.ini.602.base
    by deploying the `LambdaAtEdge_template.yaml` template.
    The Cognito User pool ID created by the `Cognito_template.yml` CloudFormation template was stored in an AWS SSM
    variable for this template to use.
+   As noted in the `deploysh` comments, this template must be deployed in `us-east-1` AWS Region.
 
    To acquire an image from the S3 bucket, make a request to the CloudFront web distribution and include a JWT token
    acauired from Cognito as a header.  Below is an example from the command line.
