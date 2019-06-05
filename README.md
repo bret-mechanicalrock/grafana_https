@@ -78,8 +78,10 @@ $ diff grafana.ini grafana.ini.602.base
    the example code will allow them to retrieve an image from S3, and otherwise the request is denied.  Many users may
    be assigned to a group, and a user may belong to many groups.  Set this up as you wish for exploration and testing.
 
-7) Edit the deploy.sh file to set values desired, then run the script to install the CloudFront/Lambda@Edge/S3 software.
-   The Cognito User pool ID was stored in an AWS SSM variable for this template to use.
+7) Edit the deploy.sh file to set values desired, then run the script to install the CloudFront/Lambda@Edge/S3 software
+   by deploying the `LambdaAtEdge_template.yaml` template.
+   The Cognito User pool ID created by the `Cognito_template.yml` CloudFormation template was stored in an AWS SSM
+   variable for this template to use.
 
    To acquire an image from the S3 bucket, make a request to the CloudFront web distribution and include a JWT token
    acauired from Cognito as a header.  Here is an example from the command line:
@@ -111,7 +113,7 @@ $ wget --header='Authorization: Bearer <JWT token text here>' https://d21lkkuybu
 
 `$ git clone  https://github.com/MechanicalRock/cognito-jwt-token-cli`
 
-   This project has a README file.  The basics are to edit the index.js file to match your installation, and build it.
+   This project has a README file.  The basics are to edit the `index.js` file to match your installation, and build it.
 
    This is a usage example.  On success, the output will be the JWT token for the user named:
    
