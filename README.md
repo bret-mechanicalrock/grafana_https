@@ -1,5 +1,5 @@
 # grafana_https
-AWS Cloudformation templates and supporting scripts to create an HTTPS path for Grafana, allow a Cognito login for Grafana, and provide access to images stored in AWS S3 via CloudFront gated by an AWS Lambda@Edge function.
+##AWS Cloudformation templates and supporting scripts to create an HTTPS path for Grafana, allow a Cognito login for Grafana, and provide access to images stored in AWS S3 via CloudFront gated by an AWS Lambda@Edge function.
 
 1) Provide an install of Grafana accessible at an HTTPS URL.
    Cognito requires HTTPS.  If you do not currently have this, use the `grafana_https.yml` CloudFormation template
