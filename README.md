@@ -135,6 +135,8 @@ $ COGNITO_USER="user.2" COGNITO_PASS="Password_1" node ./index.js
      u0vC3oJIPXXH5CW9Xx4olnMyItWkDuV6-ieg9siAUl-gg
 ```
 
+## Further information
+
 AWS provides an example of a CloudFront/Lambda@Edge/S3 web distribution which may provide further insight into the workings
 of the system:
  
