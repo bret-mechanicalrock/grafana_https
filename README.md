@@ -87,7 +87,7 @@ $ diff grafana.ini grafana.ini.602.base
    variable for this template to use.
 
    To acquire an image from the S3 bucket, make a request to the CloudFront web distribution and include a JWT token
-   acauired from Cognito as a header.  Here is an example from the command line:
+   acauired from Cognito as a header.  Below is an example from the command line.
 
    Note the word `Bearer` - it is required.  The path `vessel_1` is a top-level folder in a path in the S3 bucket, and it
    also corresponds to a group in the Cognito User Pool - and it is analogous to a vessel designation in your application.
