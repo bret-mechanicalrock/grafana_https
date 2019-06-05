@@ -15,7 +15,7 @@
    This template may be deployed in any AWS Region.
 
 3) Using values from the output of the CloudFormation template, modify the `grafana.ini` file to configure Oauth2 logins.
-   This diff against a base grafana.ini file shows the entries I changed to provide Cognito log in on my system.
+   This diff against a base `grafana.ini` file shows the entries I changed to provide Cognito log in on my system.
    Of course, you must substitute your values:
 
 ```
@@ -80,7 +80,7 @@ $ diff grafana.ini grafana.ini.602.base
    in the bucket will correspond to a 'vessel'.  Populate this bucket with images for testing according to the template:
    `foldername/yyyy/mm/dd/filename.jpg`
 
-6) Edit the users in the Cognito User Pool you created above, and create Groups and assign users to the groups for testing.
+6) Edit the users in the Cognito User Pool you created above, and create Cognito Groups and assign users to the groups for testing.
    The group names correspond to the foldernames used for vessels in the S3 bucket.  If a user is assigned to a group,
    the example code will allow them to retrieve an image from S3, and otherwise the request is denied.  Many users may
    be assigned to a group, and a user may belong to many groups.  Set this up as you wish for exploration and testing.
