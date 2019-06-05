@@ -88,15 +88,15 @@ $ diff grafana.ini grafana.ini.602.base
 
    To acquire an image from the S3 bucket, make a request to the CloudFront web distribution and include a JWT token
    acauired from Cognito as a header.  Here is an example from the command line:
+
+   Note the word `Bearer` - it is required.  The path `vessel_1` is a top-level folder in a path in the S3 bucket, and it
+   also corresponds to a group in the Cognito User Pool - and it is analogous to a vessel designation in your application.
+
+   The Lambda code provided implements this scheme, and you may choose another and modify the code to fit your preference.
    
 ```
 $ wget --header='Authorization: Bearer <JWT token text here>' https://d21lkkuybunt0i.cloudfront.net/vessel_1/2019/5/24/image_file.jpg
 ```
-
-   Note the word `Bearer` - it is required.  The path `vessel_1` is a top-level folder in a path in the S3 bucket, and it
-   also corresponds to a group in the Cognito User Pool - and it analogous to a vessel designation in your application.
-
-   The Lambda code provided implements this scheme, and you may choose another and modify the code to fit your preference.
 
 8) The above mentions you must include a JWT token provided by your Cognito User Pool to acquire an image.  I have noted
    that, on log in via Cognito, the several tokens associated with a user are printed to the Grafana log file:
